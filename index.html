@@ -658,6 +658,117 @@
       border: 0;
     }
 
+    /* ── CARD SCREENSHOTS ───────────────────────────────── */
+    .card-shots {
+      margin: 10px 0 8px;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .card-shots::-webkit-scrollbar { display: none; }
+    .card-shot {
+      flex-shrink: 0;
+      height: 88px;
+      width: auto;
+      max-width: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+      cursor: zoom-in;
+      border: 1px solid var(--border);
+      transition: opacity 0.15s, border-color 0.15s;
+    }
+    .card-shot:hover { opacity: 0.8; border-color: var(--border-mid); }
+
+    /* ── MODAL SCREENSHOTS ──────────────────────────────── */
+    .modal-shots-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .modal-shots {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 22px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .modal-shot {
+      flex-shrink: 0;
+      height: 150px;
+      width: auto;
+      object-fit: cover;
+      border-radius: 7px;
+      cursor: zoom-in;
+      border: 1px solid var(--border);
+      transition: opacity 0.15s;
+    }
+    .modal-shot:hover { opacity: 0.85; }
+
+    /* ── LIGHTBOX ────────────────────────────────────────── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.93);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox-img {
+      max-width: 92vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 8px 60px rgba(0,0,0,0.7);
+    }
+    .lb-close {
+      position: fixed;
+      top: 18px; right: 22px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border-mid);
+      color: var(--text-primary);
+      font-size: 18px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10000;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lb-close:hover { background: rgba(255,255,255,0.15); }
+    .lb-nav {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border-mid);
+      color: var(--text-primary);
+      font-size: 22px;
+      padding: 14px 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      z-index: 10000;
+      line-height: 1;
+      display: none;
+    }
+    #lightbox.open .lb-nav { display: block; }
+    .lb-prev { left: 14px; }
+    .lb-next { right: 14px; }
+    .lb-counter {
+      position: fixed;
+      bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      z-index: 10000;
+    }
+
     /* ── BOARD TABS ─────────────────────────────────────── */
     .board-tabs { display: none; } /* tabs removed — scroll layout replaces them */
 
@@ -957,9 +1068,19 @@
     <div class="modal-body"  id="m-body"></div>
     <div class="modal-tags"  id="m-tags"></div>
     <div class="modal-hr"></div>
+    <div id="m-shots"></div>
     <div class="modal-actions" id="m-actions"></div>
     <div id="m-video"></div>
   </div>
+</div>
+
+<!-- ── LIGHTBOX ─────────────────────────────────────────── -->
+<div id="lightbox" onclick="lbBgClick(event)">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-nav lb-prev" onclick="lbNav(-1)">&#8249;</button>
+  <img id="lightbox-img" src="" alt="">
+  <button class="lb-nav lb-next" onclick="lbNav(1)">&#8250;</button>
+  <span class="lb-counter" id="lb-counter"></span>
 </div>
 
 <script>
@@ -1085,7 +1206,7 @@ window.addEventListener('scroll', () => {
 const DATA = {
   orbit: {
     title: 'ORBIT',
-    logo:  'logos/ORBit-logo-dark.png',
+    logo:  'assets/logos/ORBit-logo-dark.png',
     meta:  'GAME // PUBLIC',
     badge: '<span class="badge a">EARLY ACCESS</span>',
     body:  'ORBit started as a way to teach my kids about gravity — a sandbox where you launch planets and watch physics do its thing. It grew from there. You orbit planets around a star and try to keep them alive. Stable orbits earn points. Drift too close to the sun or past the boundary and your planet is gone. Nail a perfect circular orbit and you get a 10x bonus. The catch: your star is evolving — from yellow dwarf to red giant to neutron star to black hole — and the game ends when it collapses. What started as a dad project in Claude Chat became a real game.',
@@ -1096,7 +1217,8 @@ const DATA = {
   },
   shopping: {
     title: 'SHOPPING LIST',
-    logo:  'Logos/Z shopping list transparent.png',
+    logo:  'assets/logos/Z shopping list transparent.png',
+    screenshots: ['assets/images/Z Shopping List App 1.png'],
     meta:  'APP // PRIVATE',
     badge: '<span class="badge a">EARLY ACCESS</span>',
     body:  'A clean, smart grocery list app built to solve a problem I had every week. Features category grouping, smart sorting, and a minimal interface that gets out of the way. Built with AI assistance from idea to shipped product.',
@@ -1105,7 +1227,8 @@ const DATA = {
   },
   populi: {
     title: 'THE POPULI PROJECT',
-    logo:  'logos/populi-logo-dark-full.png',
+    logo:  'assets/logos/populi-logo-dark-full.png',
+    screenshots: ['assets/images/Populi Project 1.png','assets/images/Populi Project 2.png'],
     meta:  'TOOL // PUBLIC',
     badge: '<span class="badge v">PROTOTYPE</span>',
     body:  "We've built governments, institutions, and media systems that are supposed to represent public will — but somewhere along the way, we stopped actually asking people what they think.\n\nPopuli is the roll call we've been missing. A platform where verified people — not bots, not algorithms, not self-selected activists — weigh in on the questions that shape their lives. The result is a live, trustworthy signal of where the public actually stands.\n\nThe moderate majority has always existed. It's just never had infrastructure.\n\nPopuli is that infrastructure.\n\nStarting city by city, question by question — built to scale globally.",
@@ -1141,7 +1264,8 @@ const DATA = {
   },
   timetracker: {
     title: 'TIME TRACKER',
-    logo:  'Logos/Full Logo Transparent.png',
+    logo:  'assets/logos/Full Logo Transparent.png',
+    screenshots: ['assets/images/Time Tracker 1.png','assets/images/Time Tracker 2.png'],
     meta:  'APP // PRIVATE',
     badge: '<span class="badge a">EARLY ACCESS</span>',
     body:  'A focused time-tracking tool built around how PMs and builders actually work — not how project managers think they should work. No complex timesheets. Just clarity on where your time is actually going.',
@@ -1154,6 +1278,7 @@ const DATA = {
     badge: '<span class="badge g">IDEA</span>',
     body:  'Real-time audience reactions and engagement for live events, presentations, or streams. Think emoji reactions, live polls, and sentiment signals that a presenter can actually see and respond to in the moment.',
     tags:  ['APP','LIVE','EVENTS','ENGAGEMENT','IDEA'],
+    screenshots: ['assets/images/Reaction App 1.png','assets/images/Reaction App 2.png'],
     link:  null,
   },
   tokenoracle: {
@@ -1162,6 +1287,7 @@ const DATA = {
     badge: '<span class="badge v">PROTOTYPE</span>',
     body:  "Token Oracle makes visible something most people never see: the moment an AI chooses its next word.\n\nEvery time a language model generates text, it's quietly running through thousands of candidate words, weighing probabilities, and collapsing them down to a single choice. Token Oracle turns that invisible process into a three-act animation — attention arcs light up across your input, candidate tokens orbit the canvas sized by probability, and the winner crystallizes at the center with its reasoning shown.\n\nBuilt with real Claude API calls, so every prediction is genuine. Type any prompt and watch the model think.",
     tags:  ['AI','VISUALIZATION','CLAUDE API','PROTOTYPE','TOOL'],
+    screenshots: ['assets/images/Token Oracle 1.png','assets/images/Token Oracle 2.png'],
     link:  null,
   },
   receiptscanner: {
@@ -1197,6 +1323,16 @@ function openModal(id) {
     .split('\n\n')
     .map(p => `<p style="margin-bottom:14px">${p}</p>`)
     .join('');
+  const shotsEl = document.getElementById('m-shots');
+  if (d.screenshots && d.screenshots.length) {
+    shotsEl.innerHTML = `<div class="modal-shots-label">Screenshots</div><div class="modal-shots">${
+      d.screenshots.map((src, i) =>
+        `<img src="${src}" class="modal-shot" alt="Screenshot ${i+1}" onclick="openLightbox(${JSON.stringify(d.screenshots)},${i})">`
+      ).join('')
+    }</div>`;
+  } else {
+    shotsEl.innerHTML = '';
+  }
   document.getElementById('m-tags').innerHTML    = d.tags.map(t =>
     `<span class="modal-tag">${t}</span>`).join('');
   const ctaLabel = d.cta || 'VISIT LIVE SITE';
@@ -1220,6 +1356,46 @@ function handleOverlayClick(e) {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ── LIGHTBOX ─────────────────────────────────────────────── */
+let _lbImgs = [], _lbIdx = 0;
+
+function openLightbox(imgs, idx) {
+  _lbImgs = imgs;
+  _lbIdx  = idx;
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = _lbImgs[_lbIdx];
+  updateLbCounter();
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function lbNav(dir) {
+  _lbIdx = (_lbIdx + dir + _lbImgs.length) % _lbImgs.length;
+  document.getElementById('lightbox-img').src = _lbImgs[_lbIdx];
+  updateLbCounter();
+}
+
+function updateLbCounter() {
+  const el = document.getElementById('lb-counter');
+  el.textContent = _lbImgs.length > 1 ? `${_lbIdx + 1} / ${_lbImgs.length}` : '';
+}
+
+function lbBgClick(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape')      closeLightbox();
+  if (e.key === 'ArrowLeft')   lbNav(-1);
+  if (e.key === 'ArrowRight')  lbNav(1);
+});
 
 </script>
 
