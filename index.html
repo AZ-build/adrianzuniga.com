@@ -691,20 +691,12 @@
     }
     .modal-shots {
       display: flex;
+      flex-direction: column;
       gap: 12px;
-      overflow-x: auto;
       margin-bottom: 22px;
-      padding-bottom: 10px;
-      scrollbar-width: thin;
-      scrollbar-color: var(--border-mid) transparent;
     }
-    .modal-shots::-webkit-scrollbar { height: 4px; }
-    .modal-shots::-webkit-scrollbar-track { background: transparent; }
-    .modal-shots::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 2px; }
     .modal-shot {
-      flex-shrink: 0;
       width: 100%;
-      max-width: 480px;
       height: auto;
       display: block;
       border-radius: 8px;
