@@ -110,13 +110,16 @@
 
     /* ── BG WORDMARK ────────────────────────────────────────── */
     .bg-wordmark {
-      position: absolute;
-      top: 64px;
-      left: 48px;
-      right: 48px;
-      width: auto;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: calc(100vw - 96px);
       pointer-events: none;
       z-index: 0;
+    }
+    @media (max-width: 600px) {
+      .bg-wordmark { width: calc(100vw - 32px); }
     }
 
     /* ── HERO ─────────────────────────────────────────────── */
