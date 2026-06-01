@@ -252,7 +252,7 @@
     /* ── BOARD ───────────────────────────────────────────── */
     .board {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
 
@@ -906,20 +906,10 @@
       <div class="board-col" data-col="0">
         <div class="col-head reveal">
           <div class="col-dot id"></div>
-          <span class="col-label id">Ideas</span>
+          <span class="col-label id">Idea Backlog</span>
         </div>
 
-        <div class="card idea reveal reveal-delay-1" onclick="openModal('sourdough')">
-          <div class="card-row">
-            <span class="card-year">TOOL // PUBLIC</span>
-            <span class="badge g">IDEA</span>
-          </div>
-          <img src="assets/logos/SDscheduler-transparent-full.PNG" alt="Sourdough Scheduler" class="card-logo">
-          <div class="card-desc">A smarter way to manage your sourdough starter schedule and baking timelines.</div>
-          <span class="card-cta" style="color:var(--text-muted)">OPEN PROJECT →</span>
-        </div>
-
-        <div class="card idea reveal reveal-delay-2" onclick="openModal('livereaction')">
+        <div class="card idea reveal reveal-delay-1" onclick="openModal('livereaction')">
           <div class="card-row">
             <span class="card-year">APP // PUBLIC</span>
             <span class="badge g">IDEA</span>
@@ -929,7 +919,7 @@
           <span class="card-cta" style="color:var(--text-muted)">OPEN PROJECT →</span>
         </div>
 
-        <div class="card idea reveal reveal-delay-3" onclick="openModal('receiptscanner')">
+        <div class="card idea reveal reveal-delay-2" onclick="openModal('receiptscanner')">
           <div class="card-row">
             <span class="card-year">APP // PRIVATE</span>
             <span class="badge g">IDEA</span>
@@ -947,7 +937,17 @@
           <span class="col-label pt">Prototypes</span>
         </div>
 
-        <div class="card v reveal reveal-delay-1" onclick="openModal('populi')">
+        <div class="card v reveal reveal-delay-1" onclick="openModal('sourdough')">
+          <div class="card-row">
+            <span class="card-year">TOOL // PRIVATE</span>
+            <span class="badge v">PROTOTYPE</span>
+          </div>
+          <img src="assets/logos/SDscheduler-transparent-full.PNG" alt="Sourdough Scheduler" class="card-logo">
+          <div class="card-desc">A smarter way to manage your sourdough starter schedule and baking timelines.</div>
+          <span class="card-cta v">OPEN PROJECT →</span>
+        </div>
+
+        <div class="card v reveal reveal-delay-2" onclick="openModal('populi')">
           <div class="card-row">
             <span class="card-year">TOOL // PUBLIC</span>
             <span class="badge v">PROTOTYPE</span>
@@ -957,7 +957,7 @@
           <span class="card-cta v">OPEN PROJECT →</span>
         </div>
 
-        <div class="card v reveal reveal-delay-2" onclick="openModal('theo')">
+        <div class="card v reveal reveal-delay-3" onclick="openModal('theo')">
           <div class="card-row">
             <span class="card-year">APP // PRIVATE</span>
             <span class="badge v">PROTOTYPE</span>
@@ -967,7 +967,7 @@
           <span class="card-cta v">OPEN PROJECT →</span>
         </div>
 
-        <div class="card v reveal reveal-delay-3" onclick="openModal('scrolltune')">
+        <div class="card v reveal" onclick="openModal('scrolltune')">
           <div class="card-row">
             <span class="card-year">APP // PUBLIC</span>
             <span class="badge v">PROTOTYPE</span>
@@ -992,7 +992,7 @@
       <div class="board-col" data-col="2">
         <div class="col-head reveal">
           <div class="col-dot ea"></div>
-          <span class="col-label ea">Early Access</span>
+          <span class="col-label ea">Live</span>
         </div>
 
         <div class="card reveal reveal-delay-1" onclick="openModal('orbit')">
@@ -1024,16 +1024,6 @@
           <div class="card-desc">A smart grocery app with categories, smart sorting, and a clean minimal interface.</div>
           <span class="card-cta c">OPEN PROJECT →</span>
         </div>
-      </div>
-
-      <!-- GENERALLY AVAILABLE -->
-      <div class="board-col" data-col="3">
-        <div class="col-head reveal">
-          <div class="col-dot ga"></div>
-          <span class="col-label ga">Generally Available</span>
-        </div>
-
-        <p class="col-coming-soon reveal">Coming soon.</p>
       </div>
 
     </div>
@@ -1281,8 +1271,9 @@ const DATA = {
   },
   sourdough: {
     title: 'SOURDOUGH SCHEDULER',
-    meta:  'TOOL // PUBLIC',
-    badge: '<span class="badge g">IDEA</span>',
+    logo:  'assets/logos/SDscheduler-transparent-full.PNG',
+    meta:  'TOOL // PRIVATE',
+    badge: '<span class="badge v">PROTOTYPE</span>',
     body:  'A smarter way to manage your sourdough starter schedule and baking timelines. The idea: remove the guesswork from sourdough by building a tool that tracks feeding schedules, predicts rise times, and reminds you at exactly the right moment.',
     tags:  ['TOOL','FOOD','SCHEDULER','IDEA'],
     link:  null,
