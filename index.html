@@ -942,7 +942,7 @@
             <span class="card-year">TOOL // PRIVATE</span>
             <span class="badge v">PROTOTYPE</span>
           </div>
-          <img src="assets/logos/SDscheduler-transparent-full.PNG" alt="Sourdough Scheduler" class="card-logo">
+          <img src="Logos/SDscheduler-transparent-full.PNG" alt="Sourdough Scheduler" class="card-logo">
           <div class="card-desc">A smarter way to manage your sourdough starter schedule and baking timelines.</div>
           <span class="card-cta v">OPEN PROJECT →</span>
         </div>
@@ -952,7 +952,7 @@
             <span class="card-year">TOOL // PUBLIC</span>
             <span class="badge v">PROTOTYPE</span>
           </div>
-          <img src="assets/logos/populi-logo-dark-full.png" alt="The Populi Project" class="card-logo">
+          <img src="Logos/populi-logo-dark-full.png" alt="The Populi Project" class="card-logo">
           <div class="card-desc">My idea for saving democracy. A platform to surface what people actually think — verified, unfiltered, and built to scale.</div>
           <span class="card-cta v">OPEN PROJECT →</span>
         </div>
@@ -1000,7 +1000,7 @@
             <span class="card-year">GAME // PUBLIC</span>
             <span class="badge a">EARLY ACCESS</span>
           </div>
-          <img src="assets/logos/ORBit-logo-dark.png" alt="ORBit" class="card-logo">
+          <img src="Logos/ORBit-logo-dark.png" alt="ORBit" class="card-logo">
           <div class="card-desc">A gravity sandbox game. Launch planets into orbit, keep them stable, and survive as your star evolves into a black hole.</div>
           <span class="card-cta c">OPEN PROJECT →</span>
         </div>
@@ -1010,7 +1010,7 @@
             <span class="card-year">APP // PRIVATE</span>
             <span class="badge a">EARLY ACCESS</span>
           </div>
-          <img src="assets/logos/Full Logo Transparent.png" alt="Time Tracker" class="card-logo">
+          <img src="Logos/Full Logo Transparent.png" alt="Time Tracker" class="card-logo">
           <div class="card-desc">Track your time. See exactly where your hours go — broken down however you want to slice it.</div>
           <span class="card-cta c">OPEN PROJECT →</span>
         </div>
@@ -1020,8 +1020,18 @@
             <span class="card-year">APP // PRIVATE</span>
             <span class="badge a">EARLY ACCESS</span>
           </div>
-          <img src="assets/logos/Z shopping list transparent.png" alt="Shopping List" class="card-logo">
+          <img src="Logos/Z shopping list transparent.png" alt="Shopping List" class="card-logo">
           <div class="card-desc">A smart grocery app with categories, smart sorting, and a clean minimal interface.</div>
+          <span class="card-cta c">OPEN PROJECT →</span>
+        </div>
+
+        <div class="card reveal reveal-delay-3" onclick="openModal('financetracker')">
+          <div class="card-row">
+            <span class="card-year">APP // PRIVATE</span>
+            <span class="badge a">EARLY ACCESS</span>
+          </div>
+          <img src="Logos/Z Finance/wordmark-dark.png" alt="Z Finance" class="card-logo">
+          <div class="card-desc">A household finance dashboard that brings every bank account into one view — net worth, monthly trends, and spending by category.</div>
           <span class="card-cta c">OPEN PROJECT →</span>
         </div>
       </div>
@@ -1221,7 +1231,7 @@ window.addEventListener('scroll', () => {
 const DATA = {
   orbit: {
     title: 'ORBIT',
-    logo:  'assets/logos/ORBit-logo-dark.png',
+    logo:  'Logos/ORBit-logo-dark.png',
     meta:  'GAME // PUBLIC',
     badge: '<span class="badge a">EARLY ACCESS</span>',
     body:  'ORBit started as a way to teach my kids about gravity — a sandbox where you launch planets and watch physics do its thing. It grew from there. You orbit planets around a star and try to keep them alive. Stable orbits earn points. Drift too close to the sun or past the boundary and your planet is gone. Nail a perfect circular orbit and you get a 10x bonus. The catch: your star is evolving — from yellow dwarf to red giant to neutron star to black hole — and the game ends when it collapses. What started as a dad project in Claude Chat became a real game.',
@@ -1230,10 +1240,20 @@ const DATA = {
     cta:   'PLAY NOW',
     video: 'https://www.youtube.com/embed/6pTRa4HsVu0',
   },
+  financetracker: {
+    title: 'Z FINANCE',
+    logo:  'Logos/Z Finance/wordmark-dark.png',
+    screenshots: ['images/Z Finance Screenshot.PNG'],
+    meta:  'APP // PRIVATE',
+    badge: '<span class="badge a">EARLY ACCESS</span>',
+    body:  "I built this to stop guessing about money.\n\nOur finances were spread across multiple accounts, and I had no single place to see the whole picture. Z Finance pulls it all together: total cash and net worth at a glance, average income vs. spending per month, and trends over time so I can see whether we're actually saving or just feeling like we are.\n\nUnder the hood it imports transactions from bank CSVs, auto-categorizes them with editable rules, and flags anything uncertain for review — so nothing gets silently miscounted. It also sends a weekly recap by email to my wife, so we're both on the same page without anyone having to log in.",
+    tags:  ['APP','FINANCE','AI-ASSISTED','PRODUCTIVITY','PRIVATE'],
+    link:  null,
+  },
   shopping: {
     title: 'SHOPPING LIST',
-    logo:  'assets/logos/Z shopping list transparent.png',
-    screenshots: ['assets/images/Z Shopping List App 1.png'],
+    logo:  'Logos/Z shopping list transparent.png',
+    screenshots: ['images/Z Shopping List App 1.png'],
     meta:  'APP // PRIVATE',
     badge: '<span class="badge a">EARLY ACCESS</span>',
     body:  'A clean, smart grocery list app built to solve a problem I had every week. Features category grouping, smart sorting, and a minimal interface that gets out of the way. Built with AI assistance from idea to shipped product.',
@@ -1242,8 +1262,8 @@ const DATA = {
   },
   populi: {
     title: 'THE POPULI PROJECT',
-    logo:  'assets/logos/populi-logo-dark-full.png',
-    screenshots: ['assets/images/Populi Project 1.png','assets/images/Populi Project 2.png'],
+    logo:  'Logos/populi-logo-dark-full.png',
+    screenshots: ['images/Populi Project 1.png','images/Populi Project 2.png'],
     meta:  'TOOL // PUBLIC',
     badge: '<span class="badge v">PROTOTYPE</span>',
     body:  "We've built governments, institutions, and media systems that are supposed to represent public will — but somewhere along the way, we stopped actually asking people what they think.\n\nPopuli is the roll call we've been missing. A platform where verified people — not bots, not algorithms, not self-selected activists — weigh in on the questions that shape their lives. The result is a live, trustworthy signal of where the public actually stands.\n\nThe moderate majority has always existed. It's just never had infrastructure.\n\nPopuli is that infrastructure.\n\nStarting city by city, question by question — built to scale globally.",
@@ -1271,7 +1291,7 @@ const DATA = {
   },
   sourdough: {
     title: 'SOURDOUGH SCHEDULER',
-    logo:  'assets/logos/SDscheduler-transparent-full.PNG',
+    logo:  'Logos/SDscheduler-transparent-full.PNG',
     meta:  'TOOL // PRIVATE',
     badge: '<span class="badge v">PROTOTYPE</span>',
     body:  'A smarter way to manage your sourdough starter schedule and baking timelines. The idea: remove the guesswork from sourdough by building a tool that tracks feeding schedules, predicts rise times, and reminds you at exactly the right moment.',
@@ -1280,8 +1300,8 @@ const DATA = {
   },
   timetracker: {
     title: 'TIME TRACKER',
-    logo:  'assets/logos/Full Logo Transparent.png',
-    screenshots: ['assets/images/Time Tracker 1.png','assets/images/Time Tracker 2.png'],
+    logo:  'Logos/Full Logo Transparent.png',
+    screenshots: ['images/Time Tracker 1.png','images/Time Tracker 2.png'],
     meta:  'APP // PRIVATE',
     badge: '<span class="badge a">EARLY ACCESS</span>',
     body:  "I built this to understand where my time actually goes.\n\nNot for work. Not for billing. Just for me. I wanted a simple, honest view of how I spend my hours — by day, by category, by whatever breakdown made sense. No timesheets, no overhead, no friction. Just log it, see it, and actually learn something from it.\n\nMost time trackers are built for teams or invoices. This one is built for visibility — a personal snapshot of how your time gets spent, so you can be intentional about it.",
@@ -1294,7 +1314,7 @@ const DATA = {
     badge: '<span class="badge g">IDEA</span>',
     body:  'Real-time audience reactions and engagement for live events, presentations, or streams. Think emoji reactions, live polls, and sentiment signals that a presenter can actually see and respond to in the moment.',
     tags:  ['APP','LIVE','EVENTS','ENGAGEMENT','IDEA'],
-    screenshots: ['assets/images/Reaction App 1.png','assets/images/Reaction App 2.png'],
+    screenshots: ['images/Reaction App 1.png','images/Reaction App 2.png'],
     link:  null,
   },
   tokenoracle: {
@@ -1303,7 +1323,7 @@ const DATA = {
     badge: '<span class="badge v">PROTOTYPE</span>',
     body:  "Token Oracle makes visible something most people never see: the moment an AI chooses its next word.\n\nEvery time a language model generates text, it's quietly running through thousands of candidate words, weighing probabilities, and collapsing them down to a single choice. Token Oracle turns that invisible process into a three-act animation — attention arcs light up across your input, candidate tokens orbit the canvas sized by probability, and the winner crystallizes at the center with its reasoning shown.\n\nBuilt with real Claude API calls, so every prediction is genuine. Type any prompt and watch the model think.",
     tags:  ['AI','VISUALIZATION','CLAUDE API','PROTOTYPE','TOOL'],
-    screenshots: ['assets/images/Token Oracle 1.png','assets/images/Token Oracle 2.png'],
+    screenshots: ['images/Token Oracle 1.png','images/Token Oracle 2.png'],
     link:  null,
   },
   receiptscanner: {
