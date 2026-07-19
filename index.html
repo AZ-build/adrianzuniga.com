@@ -957,16 +957,6 @@
           <span class="card-cta v">OPEN PROJECT →</span>
         </div>
 
-        <div class="card v reveal reveal-delay-3" onclick="openModal('theo')">
-          <div class="card-row">
-            <span class="card-year">APP // PRIVATE</span>
-            <span class="badge v">PROTOTYPE</span>
-          </div>
-          <div class="card-title">Theo Speech App</div>
-          <div class="card-desc">Coming soon — details brewing.</div>
-          <span class="card-cta v">OPEN PROJECT →</span>
-        </div>
-
         <div class="card v reveal" onclick="openModal('scrolltune')">
           <div class="card-row">
             <span class="card-year">APP // PUBLIC</span>
@@ -988,7 +978,7 @@
         </div>
       </div>
 
-      <!-- EARLY ACCESS -->
+      <!-- LIVE -->
       <div class="board-col" data-col="2">
         <div class="col-head reveal">
           <div class="col-dot ea"></div>
@@ -998,7 +988,7 @@
         <div class="card reveal reveal-delay-1" onclick="openModal('orbit')">
           <div class="card-row">
             <span class="card-year">GAME // PUBLIC</span>
-            <span class="badge a">EARLY ACCESS</span>
+            <span class="badge a">TRY IT</span>
           </div>
           <img src="assets/logos/ORBit-logo-dark.png" alt="ORBit" class="card-logo">
           <div class="card-desc">A gravity sandbox game. Launch planets into orbit, keep them stable, and survive as your star evolves into a black hole.</div>
@@ -1008,7 +998,7 @@
         <div class="card reveal reveal-delay-2" onclick="openModal('timetracker')">
           <div class="card-row">
             <span class="card-year">APP // PRIVATE</span>
-            <span class="badge a">EARLY ACCESS</span>
+            <span class="badge a">PERSONAL</span>
           </div>
           <img src="assets/logos/Full Logo Transparent.png" alt="Time Tracker" class="card-logo">
           <div class="card-desc">Track your time. See exactly where your hours go — broken down however you want to slice it.</div>
@@ -1018,7 +1008,7 @@
         <div class="card reveal reveal-delay-3" onclick="openModal('shopping')">
           <div class="card-row">
             <span class="card-year">APP // PRIVATE</span>
-            <span class="badge a">EARLY ACCESS</span>
+            <span class="badge a">PERSONAL</span>
           </div>
           <img src="assets/logos/Z shopping list transparent.png" alt="Shopping List" class="card-logo">
           <div class="card-desc">A smart grocery app with categories, smart sorting, and a clean minimal interface.</div>
@@ -1028,10 +1018,40 @@
         <div class="card reveal reveal-delay-3" onclick="openModal('financetracker')">
           <div class="card-row">
             <span class="card-year">APP // PRIVATE</span>
-            <span class="badge a">EARLY ACCESS</span>
+            <span class="badge a">PERSONAL</span>
           </div>
           <img src="assets/logos/wordmark-dark.png" alt="Z Finance" class="card-logo">
           <div class="card-desc">A household finance dashboard that brings every bank account into one view — net worth, monthly trends, and spending by category.</div>
+          <span class="card-cta c">OPEN PROJECT →</span>
+        </div>
+
+        <div class="card reveal reveal-delay-1" onclick="openModal('theo')">
+          <div class="card-row">
+            <span class="card-year">APP // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <img src="assets/logos/Theo's Speech Adventure icon.png" alt="Theo's Speech Adventure" class="card-logo">
+          <div class="card-desc">A browser-based speech therapy game built for my son Theo — turning practice words into a playful T-Rex adventure. He asks to play it constantly.</div>
+          <span class="card-cta c">OPEN PROJECT →</span>
+        </div>
+
+        <div class="card reveal reveal-delay-2" onclick="openModal('aroundtheworld')">
+          <div class="card-row">
+            <span class="card-year">APP // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <img src="assets/logos/Around the World icon.png" alt="Around the World" class="card-logo">
+          <div class="card-desc">An interactive 3D globe plotting 18 years of my family's travel — flight paths, road trips, and a play-through timeline — mined straight out of old email archives.</div>
+          <span class="card-cta c">OPEN PROJECT →</span>
+        </div>
+
+        <div class="card reveal reveal-delay-3" onclick="openModal('unicornmath')">
+          <div class="card-row">
+            <span class="card-year">APP // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <img src="assets/logos/Unicorn Math Kingdom icon.png" alt="Unicorn Math Kingdom" class="card-logo">
+          <div class="card-desc">A story-driven math game built for my daughter — she frees five stolen Color Crystals from a rainbow kingdom by solving 2nd/3rd-grade math. She plays it nonstop.</div>
           <span class="card-cta c">OPEN PROJECT →</span>
         </div>
       </div>
@@ -1233,7 +1253,7 @@ const DATA = {
     title: 'ORBIT',
     logo:  'assets/logos/ORBit-logo-dark.png',
     meta:  'GAME // PUBLIC',
-    badge: '<span class="badge a">EARLY ACCESS</span>',
+    badge: '<span class="badge a">TRY IT</span>',
     body:  'ORBit started as a way to teach my kids about gravity — a sandbox where you launch planets and watch physics do its thing. It grew from there. You orbit planets around a star and try to keep them alive. Stable orbits earn points. Drift too close to the sun or past the boundary and your planet is gone. Nail a perfect circular orbit and you get a 10x bonus. The catch: your star is evolving — from yellow dwarf to red giant to neutron star to black hole — and the game ends when it collapses. What started as a dad project in Claude Chat became a real game.',
     tags:  ['PHYSICS SANDBOX','HTML5 CANVAS','AI-ASSISTED','CLAUDE','GAME'],
     link:  'https://az-build.github.io/zen-drift/ORBit.html',
@@ -1245,7 +1265,7 @@ const DATA = {
     logo:  'assets/logos/wordmark-dark.png',
     screenshots: ['assets/images/Z Finance Screenshot.PNG'],
     meta:  'APP // PRIVATE',
-    badge: '<span class="badge a">EARLY ACCESS</span>',
+    badge: '<span class="badge a">PERSONAL</span>',
     body:  "I built this to stop guessing about money.\n\nOur finances were spread across multiple accounts, and I had no single place to see the whole picture. Z Finance pulls it all together: total cash and net worth at a glance, average income vs. spending per month, and trends over time so I can see whether we're actually saving or just feeling like we are.\n\nUnder the hood it imports transactions from bank CSVs, auto-categorizes them with editable rules, and flags anything uncertain for review — so nothing gets silently miscounted. It also sends a weekly recap by email to my wife, so we're both on the same page without anyone having to log in.",
     tags:  ['APP','FINANCE','AI-ASSISTED','PRODUCTIVITY','PRIVATE'],
     link:  null,
@@ -1255,7 +1275,7 @@ const DATA = {
     logo:  'assets/logos/Z shopping list transparent.png',
     screenshots: ['assets/images/Z Shopping List App 1.png'],
     meta:  'APP // PRIVATE',
-    badge: '<span class="badge a">EARLY ACCESS</span>',
+    badge: '<span class="badge a">PERSONAL</span>',
     body:  'A clean, smart grocery list app built to solve a problem I had every week. Features category grouping, smart sorting, and a minimal interface that gets out of the way. Built with AI assistance from idea to shipped product.',
     tags:  ['APP','UTILITY','AI-ASSISTED','PRODUCTIVITY'],
     link:  null,
@@ -1274,11 +1294,34 @@ const DATA = {
     cta2:  'READ THE MANIFESTO',
   },
   theo: {
-    title: 'THEO SPEECH APP',
+    title: "THEO'S SPEECH ADVENTURE",
+    logo:  "assets/logos/Theo's Speech Adventure icon.png",
+    screenshots: ['assets/images/theospeech1.PNG','assets/images/theospeech2.PNG','assets/images/theospeech3.PNG'],
     meta:  'APP // PRIVATE',
-    badge: '<span class="badge v">PROTOTYPE</span>',
-    body:  'Details coming soon. This one is still being defined — check back as it takes shape.',
-    tags:  ['APP','PROTOTYPE','SPEECH'],
+    badge: '<span class="badge a">PERSONAL</span>',
+    body:  "Theo Speech is a personal project I built to make speech therapy practice fun for my 5-year-old son — and he asks to play it constantly.\n\nIt's a lightweight browser game where a canvas-animated T-Rex character guides him through pronunciation exercises, currently covering 142 practice words. Instead of rote flashcard drills, each word is woven into simple, game-like interactions that keep him engaged.\n\nIt's hosted on GitHub Pages, so it's easily accessible from any device without installs.",
+    tags:  ['APP','GAME','SPEECH THERAPY','KIDS'],
+    link:  null,
+  },
+  aroundtheworld: {
+    title: 'AROUND THE WORLD',
+    logo:  'assets/logos/Around the World icon.png',
+    screenshots: ['assets/images/aroundtheworld1.PNG','assets/images/aroundtheworld2.PNG','assets/images/aroundtheworld3.PNG','assets/images/aroundtheworld4.PNG'],
+    meta:  'APP // PRIVATE',
+    badge: '<span class="badge a">PERSONAL</span>',
+    body:  "Around The World is a personal data project that turned 18 years (2008–2026) of family travel history into an interactive 3D globe.\n\nI mined four old email archives for flight confirmations and trip details, then built a single-page app (Globe.gl) that renders every trip as an arc or road route, color-coded by who was on it. You can scrub through a timeline and watch a play-through animation of the journeys unfold in order, complete with story cards for the trips that mattered most — a proposal flight to Cape Town, a months-long tour through Europe, our wedding trip to Brazil.\n\nThere's also a scratch-off-style coverage map showing every country and state visited, and a built-in trip manager for filling data gaps as more emails get mined.\n\nIt's installed as a PWA on my phone, password-gated for family only, and currently sits at 78 trips, 218 legs, and 68 cities — still growing.",
+    tags:  ['APP','DATA VIZ','GLOBE.GL','TRAVEL','PWA','PRIVATE'],
+    link:  null,
+    video: 'https://www.youtube.com/embed/zBhwU8Jvi64',
+  },
+  unicornmath: {
+    title: 'UNICORN MATH KINGDOM',
+    logo:  'assets/logos/Unicorn Math Kingdom icon.png',
+    screenshots: ['assets/images/unicorn2.PNG','assets/images/unicorn3.PNG','assets/images/unicorn4.PNG','assets/images/unicorn5.PNG'],
+    meta:  'APP // PRIVATE',
+    badge: '<span class="badge a">PERSONAL</span>',
+    body:  "Unicorn Math Kingdom is a phone-first PWA that turns 2nd/3rd-grade math practice into a story adventure for my daughter — and she plays it nonstop.\n\nThe Gray Mist has stolen the Rainbow's colors, and players journey through five lands — Cloud Kingdom, Candy Land, Crystal Caves, Star Land, and Treasure Tower — solving place value, regrouping, fractions, multiplication, and money/time problems to free each Color Crystal and restore the Rainbow.\n\nBuilt as a single self-contained HTML file with hand-drawn SVG art (no emoji, no Comic Sans), it uses research-backed pedagogy: wrong answers trigger strategy hints and visual models instead of just revealing the answer, difficulty adapts quietly based on streaks and misses, and most questions require typed or interactive answers rather than multiple choice.\n\nKids earn gems and loot to customize a dress-up unicorn avatar across 24 items, with a hidden \"Grown-Ups\" panel for tracking mastery across 20 skills. Currently PWA-ready — installable and offline-capable.",
+    tags:  ['APP','GAME','EDUCATION','PWA','KIDS'],
     link:  null,
   },
   scrolltune: {
@@ -1303,7 +1346,7 @@ const DATA = {
     logo:  'assets/logos/Full Logo Transparent.png',
     screenshots: ['assets/images/Time Tracker 3.PNG','assets/images/Time Tracker 4.PNG','assets/images/Time Tracker 5.PNG'],
     meta:  'APP // PRIVATE',
-    badge: '<span class="badge a">EARLY ACCESS</span>',
+    badge: '<span class="badge a">PERSONAL</span>',
     body:  "I built this to understand where my time actually goes.\n\nNot for work. Not for billing. Just for me. I wanted a simple, honest view of how I spend my hours — by day, by category, by whatever breakdown made sense. No timesheets, no overhead, no friction. Just log it, see it, and actually learn something from it.\n\nMost time trackers are built for teams or invoices. This one is built for visibility — a personal snapshot of how your time gets spent, so you can be intentional about it.",
     tags:  ['APP','PRODUCTIVITY','TIME','IDEA'],
     link:  null,
