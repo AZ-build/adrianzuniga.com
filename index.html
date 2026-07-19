@@ -282,6 +282,16 @@
     .col-label.ea { color: var(--amber); }
     .col-label.ga { color: var(--cyan); }
 
+    .col-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.06);
+      padding: 1px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.02em;
+    }
+
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -938,23 +948,23 @@
           <span class="col-label pt">Prototypes</span>
         </div>
 
-        <div class="card v reveal reveal-delay-1" onclick="openModal('sourdough')">
+        <div class="card v reveal reveal-delay-1" onclick="openModal('populi')">
+          <div class="card-row">
+            <span class="card-year">TOOL // PUBLIC</span>
+            <span class="badge e">JOIN US!</span>
+          </div>
+          <img src="assets/logos/populi-logo-dark-full.png" alt="The Populi Project" class="card-logo">
+          <div class="card-desc">My idea for saving democracy. A platform to surface what people actually think — verified, unfiltered, and built to scale.</div>
+          <span class="card-cta v">OPEN PROJECT →</span>
+        </div>
+
+        <div class="card v reveal reveal-delay-2" onclick="openModal('sourdough')">
           <div class="card-row">
             <span class="card-year">TOOL // PRIVATE</span>
             <span class="badge v">PROTOTYPE</span>
           </div>
           <img src="assets/logos/SDscheduler-transparent-full.PNG" alt="Sourdough Scheduler" class="card-logo">
           <div class="card-desc">A smarter way to manage your sourdough starter schedule and baking timelines.</div>
-          <span class="card-cta v">OPEN PROJECT →</span>
-        </div>
-
-        <div class="card v reveal reveal-delay-2" onclick="openModal('populi')">
-          <div class="card-row">
-            <span class="card-year">TOOL // PUBLIC</span>
-            <span class="badge v">PROTOTYPE</span>
-          </div>
-          <img src="assets/logos/populi-logo-dark-full.png" alt="The Populi Project" class="card-logo">
-          <div class="card-desc">My idea for saving democracy. A platform to surface what people actually think — verified, unfiltered, and built to scale.</div>
           <span class="card-cta v">OPEN PROJECT →</span>
         </div>
 
@@ -996,7 +1006,17 @@
           <span class="card-cta c">OPEN PROJECT →</span>
         </div>
 
-        <div class="card reveal reveal-delay-2" onclick="openModal('timetracker')">
+        <div class="card reveal reveal-delay-3" onclick="openModal('aroundtheworld')">
+          <div class="card-row">
+            <span class="card-year">APP // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <img src="assets/logos/Around the World transparent.png" alt="Around the World" class="card-logo">
+          <div class="card-desc">An interactive 3D globe plotting 18 years of my family's travel — flight paths, road trips, and a play-through timeline — mined straight out of old email archives.</div>
+          <span class="card-cta c">OPEN PROJECT →</span>
+        </div>
+
+        <div class="card reveal reveal-delay-1" onclick="openModal('timetracker')">
           <div class="card-row">
             <span class="card-year">APP // PRIVATE</span>
             <span class="badge a">PERSONAL</span>
@@ -1006,7 +1026,7 @@
           <span class="card-cta c">OPEN PROJECT →</span>
         </div>
 
-        <div class="card reveal reveal-delay-3" onclick="openModal('shopping')">
+        <div class="card reveal reveal-delay-2" onclick="openModal('shopping')">
           <div class="card-row">
             <span class="card-year">APP // PRIVATE</span>
             <span class="badge a">PERSONAL</span>
@@ -1036,17 +1056,7 @@
           <span class="card-cta c">OPEN PROJECT →</span>
         </div>
 
-        <div class="card reveal reveal-delay-2" onclick="openModal('aroundtheworld')">
-          <div class="card-row">
-            <span class="card-year">APP // PRIVATE</span>
-            <span class="badge a">PERSONAL</span>
-          </div>
-          <img src="assets/logos/Around the World transparent.png" alt="Around the World" class="card-logo">
-          <div class="card-desc">An interactive 3D globe plotting 18 years of my family's travel — flight paths, road trips, and a play-through timeline — mined straight out of old email archives.</div>
-          <span class="card-cta c">OPEN PROJECT →</span>
-        </div>
-
-        <div class="card reveal reveal-delay-3" onclick="openModal('unicornmath')">
+        <div class="card reveal reveal-delay-2" onclick="openModal('unicornmath')">
           <div class="card-row">
             <span class="card-year">APP // PRIVATE</span>
             <span class="badge a">PERSONAL</span>
@@ -1070,15 +1080,9 @@
     <div class="about-grid">
       <div class="reveal">
         <h2 class="about-title">ADRIAN<br><span>ZUNIGA.</span></h2>
-        <p class="about-body">I'm a product manager, currently at <a href="https://www.fulcrumapp.com" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none;">Fulcrum</a>, a builder at heart, and someone who loves turning ideas into things people can actually use. I'm energized by solving problems, exploring new possibilities, and learning through making — whether that's in my day-to-day product work or through side projects.</p>
-        <p class="about-body">I'm also a father, a traveler, and an optimist living in the Pacific Northwest. I value curiosity, proactivity, courage, and wisdom, and I try to bring those values into how I work, create, and move through the world.</p>
-        <p class="about-body">This site is a home for my backlog of ideas, experiments, and side projects — some practical, some weird, and all part of the process of building toward a better future.</p>
-        <div class="about-tags">
-          <span class="about-tag">CURIOSITY</span>
-          <span class="about-tag">COURAGE</span>
-          <span class="about-tag">PROACTIVITY</span>
-          <span class="about-tag">WISDOM</span>
-        </div>
+        <p class="about-body">I'm a dude that loves to solve problems in new ways and learning through making. Whether that's in my day-to-day work as a product manager or through side projects.</p>
+        <p class="about-body">I'm also a father, an optimist, and a traveler based in the Pacific Northwest. I value wisdom, curiosity, proactivity, and courage.</p>
+        <p class="about-body">This site is a home for my backlog of ideas, experiments, and side projects. Some fun, some practical, some for my kids, and one that I believe can change the course of history.</p>
       </div>
     </div>
   </section>
@@ -1286,7 +1290,7 @@ const DATA = {
     logo:  'assets/logos/populi-logo-dark-full.png',
     screenshots: ['assets/images/Populi Project 1.png','assets/images/Populi Project 2.png'],
     meta:  'TOOL // PUBLIC',
-    badge: '<span class="badge v">PROTOTYPE</span>',
+    badge: '<span class="badge e">JOIN US!</span>',
     body:  "We've built governments, institutions, and media systems that are supposed to represent public will — but somewhere along the way, we stopped actually asking people what they think.\n\nPopuli is the roll call we've been missing. A platform where verified people — not bots, not algorithms, not self-selected activists — weigh in on the questions that shape their lives. The result is a live, trustworthy signal of where the public actually stands.\n\nThe moderate majority has always existed. It's just never had infrastructure.\n\nPopuli is that infrastructure.\n\nStarting city by city, question by question — built to scale globally.",
     tags:  ['COMMUNITY','INSIGHTS','PROTOTYPE','TOOL'],
     link:  'https://www.thepopuliproject.org/',
@@ -1479,6 +1483,18 @@ document.addEventListener('keydown', e => {
     lbNav(-1);
   } else if (lbOpen && e.key === 'ArrowRight') {
     lbNav(1);
+  }
+});
+
+/* ── COLUMN CARD COUNTS ───────────────────────────────────── */
+document.querySelectorAll('.board-col').forEach(col => {
+  const count = col.querySelectorAll('.card').length;
+  const label = col.querySelector('.col-label');
+  if (label) {
+    const span = document.createElement('span');
+    span.className = 'col-count';
+    span.textContent = count;
+    label.insertAdjacentElement('afterend', span);
   }
 });
 </script>
