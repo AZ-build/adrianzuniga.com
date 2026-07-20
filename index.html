@@ -809,13 +809,17 @@
       section { padding: 64px 20px; }
 
       /* Board — vertical sticky-scroll layout on mobile */
-      .board { display: block; }
+      .board { display: flex; flex-direction: column; }
       .board-col {
         display: grid;
         grid-template-columns: 1fr;
         gap: 12px;
         margin-bottom: 8px;
       }
+      /* Reorder columns: Live first, then Prototypes, then Ideas last */
+      .board-col[data-col="0"] { order: 3; } /* Ideas */
+      .board-col[data-col="1"] { order: 2; } /* Prototypes */
+      .board-col[data-col="2"] { order: 1; } /* Live */
       .col-head {
         grid-column: 1 / -1;
         position: sticky;
