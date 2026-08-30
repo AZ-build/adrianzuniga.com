@@ -620,6 +620,18 @@
       opacity: 1;
       transform: scale(1.03);
     }
+    /* Letter Pop wide art is a full-bleed illustration, not a transparent
+       wordmark — round it so it reads as an intentional banner. */
+    .card-logo-banner,
+    .modal-logo-banner {
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.28);
+    }
+    .card-logo-banner { height: 62px; }
+    .modal-logo-banner {
+      max-width: 300px;
+      border-radius: 12px;
+    }
     .card-desc {
       font-size: 12.5px;
       color: var(--text-secondary);
@@ -1329,6 +1341,16 @@
           <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
         </div>
 
+        <div class="card reveal reveal-delay-2" role="button" tabindex="0" onclick="openModal('letterpop')">
+          <div class="card-row">
+            <span class="card-year">GAME // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <img src="assets/logos/Letter Pop wide.png" alt="Letter Pop!" class="card-logo card-logo-banner">
+          <div class="card-desc">An arcade letter-recognition game for pre-readers — built for my 5-year-old. Slide to aim, pop the letter the voice calls out, collect emoji.</div>
+          <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
         <div class="card reveal reveal-delay-3" role="button" tabindex="0" onclick="openModal('aroundtheworld')">
           <div class="card-row">
             <span class="card-year">APP // PRIVATE</span>
@@ -1562,6 +1584,24 @@ function drawFrame() {
 }
 drawFrame();
 
+/* ── BROKEN IMAGE GUARD ───────────────────────────────────── */
+/* Hosting is case-sensitive even though Windows isn't, so a wrong-case
+   filename 404s only once live. If a card logo fails, fall back to the
+   text title instead of leaving a broken-image gap. */
+document.addEventListener('error', e => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement)) return;
+  console.warn('[image failed]', img.getAttribute('src'));
+  if (img.classList.contains('card-logo') || img.classList.contains('modal-logo')) {
+    const title = document.createElement('div');
+    title.className = img.classList.contains('modal-logo') ? 'modal-title' : 'card-title';
+    title.textContent = img.alt || '';
+    img.replaceWith(title);
+  } else {
+    img.style.display = 'none';
+  }
+}, true);
+
 /* ── KEYBOARD ACCESS FOR CARDS ────────────────────────────── */
 document.querySelectorAll('.card[role="button"]').forEach(card => {
   card.addEventListener('keydown', e => {
@@ -1610,7 +1650,7 @@ const DATA = {
   financetracker: {
     title: 'Z FINANCE',
     logo:  'assets/logos/wordmark-dark.png',
-    screenshots: ['assets/images/Z Finance Screenshot.PNG'],
+    screenshots: ['assets/images/Z Finance Screenshot.png'],
     meta:  'APP // PRIVATE',
     badge: '<span class="badge a">PERSONAL</span>',
     body:  "I built this to stop guessing about money.\n\nOur finances were spread across multiple accounts, and I had no single place to see the whole picture. Z Finance pulls it all together: total cash and net worth at a glance, average income vs. spending per month, and trends over time so I can see whether we're actually saving or just feeling like we are.\n\nUnder the hood it imports transactions from bank CSVs, auto-categorizes them with editable rules, and flags anything uncertain for review — so nothing gets silently miscounted. It also sends a weekly recap by email to my wife, so we're both on the same page without anyone having to log in.",
@@ -1639,6 +1679,17 @@ const DATA = {
     cta:   'VISIT SITE',
     link2: 'https://www.thepopuliproject.org/vision',
     cta2:  'READ THE MANIFESTO',
+  },
+  letterpop: {
+    title: 'LETTER POP!',
+    logo:  'assets/logos/Letter Pop wide.png',
+    logoBanner: true,
+    screenshots: ['assets/images/Letter Pop 1.PNG','assets/images/Letter Pop 2.PNG','assets/images/Letter Pop 3.PNG'],
+    meta:  'GAME // PRIVATE',
+    badge: '<span class="badge a">PERSONAL</span>',
+    body:  "My son is five and learning his letters. Flashcards lasted about four minutes, so I built the thing he'd choose on his own: colorful bubbles drift down the screen, a friendly voice calls out a target — \"Pop the B!\" — and he slides his finger to aim a cannon and fire before the bubble escapes. Three modes: letters A–Z, numbers 0–9, and a Word Builder that walks him through spelling simple words one letter at a time.\n\nThe hard problems here weren't technical. They were design decisions about a user who can't read instructions, can't tolerate failure, and won't tell you why he stopped playing. Sliding anywhere on the lower half of the screen steers the cannon, because small fingers miss small targets. Wrong answers cost nothing — you only lose a heart when the target escapes — so the game rewards recognition instead of spraying shots everywhere. Voice feedback on misses had to go entirely; it read as correction and annoyed him within a minute. Prompts rotate between \"Pop B!\", \"Now B!\" and just \"B!\" so the instruction never turns into noise. And difficulty adjusts itself on streaks and misses, with no settings menu a five-year-old could wander into.\n\nThe biggest surprise was retention. Correct pops earn emoji from a treasure chest with common, rare, and epic drops — collection turned out to be the strongest hook in the whole game.\n\nBuilt as a single-file web app: canvas rendering, the browser's own speech synthesis for the voice, WebAudio for effects, no backend. It's a PWA on GitHub Pages, so it installs to the iPhone home screen, opens full screen, and works offline in the car.",
+    tags:  ['GAME','EDUCATION','HTML5 CANVAS','PWA','KIDS'],
+    link:  null,
   },
   theo: {
     title: "THEO'S SPEECH ADVENTURE",
@@ -1681,7 +1732,8 @@ const DATA = {
   },
   sourdough: {
     title: 'SOURDOUGH SCHEDULER',
-    logo:  'assets/logos/SDscheduler-transparent-full.PNG',
+    /* logo file not in assets/logos yet — falls back to the text title.
+       Add the file and restore this line to show the wordmark. */
     meta:  'TOOL // PRIVATE',
     badge: '<span class="badge v">PROTOTYPE</span>',
     body:  'A smarter way to manage your sourdough starter schedule and baking timelines. The idea: remove the guesswork from sourdough by building a tool that tracks feeding schedules, predicts rise times, and reminds you at exactly the right moment.',
@@ -1731,7 +1783,8 @@ function openModal(id) {
   if (!d) return;
   document.getElementById('m-meta').innerHTML  = `<span>${d.meta}</span>${d.badge}`;
   if (d.logo) {
-    document.getElementById('m-title').innerHTML = `<img src="${d.logo}" alt="${d.title}" class="modal-logo">`;
+    const logoCls = d.logoBanner ? 'modal-logo modal-logo-banner' : 'modal-logo';
+    document.getElementById('m-title').innerHTML = `<img src="${d.logo}" alt="${d.title}" class="${logoCls}">`;
   } else {
     document.getElementById('m-title').textContent = d.title;
   }
