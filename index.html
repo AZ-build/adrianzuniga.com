@@ -1283,6 +1283,16 @@
           <span class="col-label pt">Prototypes</span>
         </div>
 
+        <div class="card v reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('savethedodo')">
+          <div class="card-row">
+            <span class="card-year">GAME // PUBLIC</span>
+            <span class="badge e">TRY IT!</span>
+          </div>
+          <img src="assets/logos/Save the Dodo transparent.png" alt="Save the Dodo" class="card-logo">
+          <div class="card-desc">A survival comedy where you can't control the hero. You can only nudge him. Keep a magnificently stupid dodo alive on an island where everything eats dodos.</div>
+          <span class="card-cta v">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
         <div class="card v reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('populi')">
           <div class="card-row">
             <span class="card-year">TOOL // PUBLIC</span>
@@ -1636,6 +1646,17 @@ window.addEventListener('scroll', () => {
 
 /* ── MODAL ────────────────────────────────────────────────── */
 const DATA = {
+  savethedodo: {
+    title: 'SAVE THE DODO',
+    logo:  'assets/logos/Save the Dodo transparent.png',
+    screenshots: ['assets/images/Save the Dodo 1.jpg','assets/images/Save the Dodo 2.jpg','assets/images/Save the Dodo 3.jpg','assets/images/Save the Dodo 4.jpg','assets/images/Save the Dodo 5.jpg'],
+    meta:  'GAME // PUBLIC',
+    badge: '<span class="badge e">TRY IT!</span>',
+    body:  "You can't control him. You can only try.\n\nSave the Dodo is a run-based survival comedy. You're an unseen force nudging a magnificently stupid dodo across a beautiful island where everything eats dodos. He wants shiny pebbles for his nest, and he needs to be home by sunset. A T-rex wants him for lunch. Sabertooths are asleep in the long grass. And the biggest threat of all is the dodo himself.\n\nHe farts, and the T-rex follows the smell. He sneezes, and the cats wake up. He trips at full sprint. He physically cannot walk past a berry, even mid-chase. That's the one design rule the whole game is built on: every joke is also a threat. Nothing he does is just decoration. The funniest thing that happens in a run is almost always the reason it ended.\n\nYou get four moves: nudge, hush, honk and jump. The T-rex turns like a bus, so the real skill is juking sideways out of its red lunge lane. Every death ends on a polaroid and a cause of death, like \"Stopped for a berry. During a T-rex chase.\"\n\nRight now it's a browser feel test, a playable prototype built to answer one question before I commit to a real game engine: is negotiating with this bird actually fun? It's built in three.js, every sound and song is synthesized in code, and it installs to your phone and plays offline. The long-term goal is a real game on Steam.",
+    tags:  ['GAME','THREE.JS','PWA','AI-ASSISTED','PROTOTYPE'],
+    link:  'https://az-build.github.io/Save-the-Dodo/',
+    cta:   'PLAY NOW',
+  },
   orbit: {
     title: 'ORBIT',
     logo:  'assets/logos/ORBit-logo-dark.png',
