@@ -1341,7 +1341,17 @@
           <span class="col-label ea">Live</span>
         </div>
 
-        <div class="card reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('orbit')">
+        <div class="card reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('speeder')">
+          <div class="card-row">
+            <span class="card-year">GAME // PUBLIC</span>
+            <span class="badge e">TRY IT!</span>
+          </div>
+          <img src="assets/logos/Speeder transparent.png" alt="Speeder" class="card-logo">
+          <div class="card-desc">A one-thumb neon hover-racer for your phone. Steer to dodge, aim and pick your power-ups. The guns fire on their own.</div>
+          <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card reveal reveal-delay-2" role="button" tabindex="0" onclick="openModal('orbit')">
           <div class="card-row">
             <span class="card-year">GAME // PUBLIC</span>
             <span class="badge e">TRY IT!</span>
@@ -1657,6 +1667,17 @@ const DATA = {
     link:  'https://az-build.github.io/Save-the-Dodo/',
     cta:   'PLAY NOW',
   },
+  speeder: {
+    title: 'SPEEDER',
+    logo:  'assets/logos/Speeder transparent.png',
+    screenshots: ['assets/images/Speeder 1.jpg','assets/images/Speeder 2.jpg','assets/images/Speeder 3.jpg','assets/images/Speeder 4.jpg','assets/images/Speeder 5.jpg'],
+    meta:  'GAME // PUBLIC',
+    badge: '<span class="badge e">TRY IT!</span>',
+    body:  "A neon hover-speeder run you play with one thumb.\n\nI wanted a fast arcade game I could pick up on my phone for two minutes and immediately want one more run. You pilot a speeder skimming just above a synthwave grid. The only control is steering left and right, and your guns fire on their own. That one input does everything: dodging, aiming, and choosing what you get stronger with.\n\nPower-ups come in pairs of gates, and you pick one by driving through it: shields, rapid fire, repairs, 2X score, a swarm of homing missiles, or another level of guns (eight of them, from extra bullets to piercing rounds and wing missiles). Drones, turrets and ram bikes come at you while the road bends, climbs onto sky roads and launches you off ramps. Every 1.4 km the world blends into a new zone, from Neon Desert to Cosmic Highway.\n\nThere's a world leaderboard, and after a run you can share a score card with a challenge link so a friend gets your score as the target to beat. It's a single HTML file with homemade pseudo-3D, no game engine, every sound is synthesized in code, and it installs to your phone and plays offline.",
+    tags:  ['GAME','HTML5 CANVAS','PWA','LEADERBOARD','AI-ASSISTED'],
+    link:  'https://az-build.github.io/speeder/',
+    cta:   'PLAY NOW',
+  },
   orbit: {
     title: 'ORBIT',
     logo:  'assets/logos/ORBit-logo-dark.png',
@@ -1764,7 +1785,7 @@ const DATA = {
   timetracker: {
     title: 'TIME TRACKER',
     logo:  'assets/logos/Full Logo Transparent.png',
-    screenshots: ['assets/images/Time Tracker 3.PNG','assets/images/Time Tracker 4.PNG','assets/images/Time Tracker 5.PNG','assets/images/Time Tracker 6.PNG'],
+    screenshots: ['assets/images/Time Tracker v2 1.jpg','assets/images/Time Tracker v2 2.jpg','assets/images/Time Tracker v2 3.jpg','assets/images/Time Tracker v2 4.jpg','assets/images/Time Tracker v2 5.jpg','assets/images/Time Tracker v2 6.jpg','assets/images/Time Tracker v2 7.jpg'],
     meta:  'APP // PRIVATE',
     badge: '<span class="badge a">PERSONAL</span>',
     body:  "I built this to understand where my time actually goes.\n\nNot for work. Not for billing. Just for me. I wanted a simple, honest view of how I spend my hours — by day, by category, by whatever breakdown made sense. No timesheets, no overhead, no friction. Just log it, see it, and actually learn something from it.\n\nMost time trackers are built for teams or invoices. This one is built for visibility — a personal snapshot of how your time gets spent, so you can be intentional about it.",
