@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adrian Zuniga — Builder. PM. Idea Machine.</title>
+  <meta name="description" content="My backlog of ideas and side projects — most built for me or my kids, a few you can go try.">
+  <meta name="theme-color" content="#09090B">
+
+  <!-- Social preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Adrian Zuniga — My Ideas In Progress">
+  <meta property="og:description" content="My backlog of ideas and side projects — most built for me or my kids, a few you can go try.">
+  <meta property="og:url" content="https://adrianzuniga.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Adrian Zuniga — My Ideas In Progress">
+  <meta name="twitter:description" content="My backlog of ideas and side projects — most built for me or my kids, a few you can go try.">
+
+  <!-- Favicon: cyan mark on the site's near-black -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2309090B'/%3E%3Crect x='8' y='8' width='16' height='16' rx='4' fill='%2300E5FF'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:             #09090B;
+      --surface:        #18181B;
+      --surface-hover:  #27272A;
+      --cyan:           #00E5FF;
+      --violet:         #8B5CF6;
+      --amber:          #F59E0B;
+      --text-primary:   #FAFAFA;
+      --text-secondary: #A1A1AA;
+      --text-muted:     #80808C;
+      --text-faint:     #6B6B75;
+      --border:         #27272A;
+      --border-mid:     #3f3f46;
+
+      /* card material */
+      --card-grad:      linear-gradient(180deg, #1D1D21 0%, #161619 100%);
+      --card-grad-hover:linear-gradient(180deg, #232328 0%, #1A1A1E 100%);
+      --radius:         10px;
+      --ease:           cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── CANVAS ─────────────────────────────────────────── */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .content { position: relative; z-index: 1; }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 64px;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background 0.3s var(--ease),
+                  border-color 0.3s var(--ease),
+                  backdrop-filter 0.3s var(--ease),
+                  height 0.3s var(--ease);
+    }
+    nav.scrolled {
+      height: 58px;
+      background: rgba(9,9,11,0.72);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      border-bottom-color: rgba(255,255,255,0.07);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .nav-logo span { color: var(--cyan); }
+    /* small cyan mark next to the wordmark */
+    .nav-logo::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 2px;
+      background: var(--cyan);
+      box-shadow: 0 0 12px rgba(0,229,255,0.6);
+    }
+
+    /* animated underline on nav links */
+    .nav-links a[href^="#"]:not(.btn-nav) {
+      position: relative;
+      padding-bottom: 3px;
+    }
+    .nav-links a[href^="#"]:not(.btn-nav)::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 100%; height: 1px;
+      background: var(--cyan);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s var(--ease);
+    }
+    .nav-links a[href^="#"]:not(.btn-nav):hover::after,
+    .nav-links a[href^="#"]:not(.btn-nav).active::after { transform: scaleX(1); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.15s;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a.active { color: var(--cyan); }
+
+    .btn-nav {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+      border: 1px solid rgba(0,229,255,0.45);
+      background: transparent;
+      padding: 7px 18px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background 0.15s, box-shadow 0.15s;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .btn-nav:hover {
+      background: rgba(0,229,255,0.08);
+      box-shadow: 0 0 12px rgba(0,229,255,0.12);
+    }
+
+    /* ── BG WORDMARK ────────────────────────────────────────── */
+    /* Anchored to the hero (absolute, not fixed) so it scrolls away
+       instead of sitting behind every section. Faded at the bottom. */
+    .bg-wordmark {
+      position: absolute;
+      top: 96px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100vw - 96px);
+      max-width: 1500px;
+      pointer-events: none;
+      z-index: 0;
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 96%);
+      mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 96%);
+    }
+    @media (max-width: 600px) {
+      .bg-wordmark { width: calc(100vw - 32px); top: 80px; }
+    }
+
+    /* ── AMBIENT GLOW + GRAIN ───────────────────────────────── */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(720px 460px at 18% 8%,  rgba(0,229,255,0.07), transparent 68%),
+        radial-gradient(620px 420px at 88% 22%, rgba(139,92,246,0.06), transparent 66%);
+    }
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.035;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 64vh;
+      padding: 150px 48px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--cyan);
+      letter-spacing: 0.16em;
+      margin-bottom: 22px;
+      opacity: 0.85;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(64px, 9.4vw, 118px);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      margin-bottom: 28px;
+    }
+    /* gradient + glow on the accent line */
+    .hero-title .c {
+      background: linear-gradient(96deg, #00E5FF 0%, #59F0FF 45%, #8B5CF6 108%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--cyan);
+      filter: drop-shadow(0 0 26px rgba(0,229,255,0.22));
+    }
+
+    .hero-desc {
+      font-size: 15.5px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      line-height: 1.78;
+      margin-bottom: 36px;
+    }
+
+    /* scroll cue */
+    .scroll-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 8px;
+      transition: color 0.2s var(--ease);
+    }
+    .scroll-cue:hover { color: var(--cyan); }
+    .scroll-cue i {
+      display: block;
+      width: 26px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--cyan), rgba(0,229,255,0.15));
+      animation: cue 2.4s var(--ease) infinite;
+      transform-origin: left;
+    }
+    @keyframes cue {
+      0%, 100% { transform: scaleX(0.55); opacity: 0.45; }
+      50%      { transform: scaleX(1);    opacity: 1; }
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 72px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 17px;
+      letter-spacing: 0.1em;
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+      background: transparent;
+      padding: 11px 30px;
+      border-radius: 3px;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .btn-primary:hover {
+      background: rgba(0,229,255,0.08);
+      box-shadow: 0 0 20px rgba(0,229,255,0.16);
+    }
+
+    .btn-secondary {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 11px 30px;
+      border-radius: 3px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-mid);
+      color: var(--text-primary);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-num {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 34px;
+      letter-spacing: 0.04em;
+      color: var(--cyan);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── SECTION SHARED ──────────────────────────────────── */
+    section { padding: 96px 48px; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .section-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-secondary);
+      letter-spacing: 0.14em;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    /* small cyan index marker before the section name */
+    .section-tag[data-n]::before {
+      content: attr(data-n);
+      font-size: 9px;
+      color: var(--cyan);
+      border: 1px solid rgba(0,229,255,0.28);
+      background: rgba(0,229,255,0.06);
+      border-radius: 3px;
+      padding: 3px 6px;
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+    .section-tag.dim { color: var(--text-faint); }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg,
+        rgba(0,229,255,0.28), var(--border) 22%, var(--border) 78%, transparent);
+    }
+
+    /* ── BOARD ───────────────────────────────────────────── */
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    /* faint dividers between columns, like a real board */
+    @media (min-width: 769px) {
+      .board-col + .board-col { position: relative; }
+      .board-col + .board-col::before {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 24px; left: -14px;
+        width: 1px;
+        background: linear-gradient(180deg, var(--border), transparent 85%);
+      }
+    }
+
+    .col-head {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .col-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .col-dot.pt { box-shadow: 0 0 10px rgba(139,92,246,0.7); }
+    .col-dot.ea { box-shadow: 0 0 10px rgba(245,158,11,0.7); }
+    .col-dot.ga { box-shadow: 0 0 10px rgba(0,229,255,0.7); }
+    .col-dot.id { background: var(--text-muted); }
+    .col-dot.pt { background: var(--violet); }
+    .col-dot.ea { background: var(--amber); }
+    .col-dot.ga { background: var(--cyan); }
+
+    .col-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .col-label.id { color: var(--text-muted); }
+    .col-label.pt { color: var(--violet); }
+    .col-label.ea { color: var(--amber); }
+    .col-label.ga { color: var(--cyan); }
+
+    .col-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.06);
+      padding: 2px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.02em;
+      margin-left: auto;
+    }
+
+    .card {
+      position: relative;
+      background: var(--card-grad);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color 0.25s var(--ease),
+                  box-shadow 0.25s var(--ease),
+                  transform 0.25s var(--ease),
+                  background 0.25s var(--ease);
+    }
+    /* top edge highlight — makes the card feel lit from above */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 12px; right: 12px;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent, rgba(255,255,255,0.10) 25%, rgba(255,255,255,0.10) 75%, transparent);
+      pointer-events: none;
+    }
+    /* accent bar that wipes in from the left on hover */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; left: 0;
+      width: 2px;
+      background: var(--cyan);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.3s var(--ease);
+      pointer-events: none;
+    }
+    .card:hover::after,
+    .card:focus-visible::after { transform: scaleY(1); }
+    .card.v::after { background: var(--violet); }
+
+    .card:hover,
+    .card:focus-visible {
+      background: var(--card-grad-hover);
+      border-color: rgba(0,229,255,0.35);
+      box-shadow: 0 0 0 1px rgba(0,229,255,0.08),
+                  0 0 28px rgba(0,229,255,0.06),
+                  0 12px 32px rgba(0,0,0,0.55);
+      transform: translateY(-3px);
+      outline: none;
+    }
+    .card.v:hover,
+    .card.v:focus-visible {
+      border-color: rgba(139,92,246,0.35);
+      box-shadow: 0 0 0 1px rgba(139,92,246,0.08),
+                  0 0 28px rgba(139,92,246,0.06),
+                  0 12px 32px rgba(0,0,0,0.55);
+    }
+
+    .card.idea {
+      background: transparent;
+      border-style: dashed;
+      border-color: #2E2E33;
+      cursor: pointer;
+    }
+    .card.idea::before { display: none; }
+    .card.idea::after { background: var(--text-muted); }
+    .card.idea .card-title { color: var(--text-secondary); }
+    .card.idea:hover,
+    .card.idea:focus-visible {
+      background: rgba(255,255,255,0.015);
+      border-color: var(--border-mid);
+      box-shadow: none;
+      transform: translateY(-2px);
+    }
+    .card.idea:hover .card-title { color: var(--text-primary); }
+
+    .card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .card-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+    .badge.c  { background: rgba(0,229,255,0.1);   color: var(--cyan);   border-color: rgba(0,229,255,0.22); }
+    .badge.v  { background: rgba(139,92,246,0.12); color: #A78BFA;       border-color: rgba(139,92,246,0.25); }
+    .badge.a  { background: rgba(245,158,11,0.12); color: var(--amber);  border-color: rgba(245,158,11,0.22); }
+    .badge.g  { background: rgba(82,82,91,0.25);   color: #9CA3AF;       border-color: rgba(255,255,255,0.07); }
+    .badge.e  {
+      background: rgba(34,197,94,0.14);
+      color: #4ADE80;
+      border-color: rgba(34,197,94,0.3);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    /* live pulse on the "try it" badges */
+    .badge.e::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #4ADE80;
+      animation: livepulse 2s ease-in-out infinite;
+    }
+    @keyframes livepulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.55); opacity: 1; }
+      70%      { box-shadow: 0 0 0 5px rgba(74,222,128,0);  opacity: 0.85; }
+    }
+
+    /* Title and logo occupy the SAME fixed slot so every card lines up,
+       whether it shows a wordmark image or a text title. */
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      line-height: 1.05;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      margin: 2px 0 10px;
+      transition: color 0.2s var(--ease);
+    }
+    .col-coming-soon {
+      grid-column: 1 / -1;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+      margin-top: 4px;
+      padding-bottom: 32px;
+    }
+
+    .card-logo {
+      display: block;
+      height: 52px;
+      width: auto;
+      max-width: 84%;
+      object-fit: contain;
+      object-position: left center;
+      margin: 2px 0 10px;
+      opacity: 0.94;
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+      transform-origin: left center;
+    }
+    .card:hover .card-logo {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+    /* Letter Pop wide art is a full-bleed illustration, not a transparent
+       wordmark — round it so it reads as an intentional banner. */
+    .card-logo-banner,
+    .modal-logo-banner {
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.28);
+    }
+    .card-logo-banner { height: 62px; }
+    .modal-logo-banner {
+      max-width: 300px;
+      border-radius: 12px;
+    }
+    .card-desc {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .card-cta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.75;
+      transition: opacity 0.25s var(--ease), gap 0.25s var(--ease);
+    }
+    .card:hover .card-cta { opacity: 1; gap: 11px; }
+    .card-cta.c { color: var(--cyan); }
+    .card-cta.v { color: var(--violet); }
+
+    /* ── CAPABILITIES ────────────────────────────────────── */
+    .caps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .cap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 22px 16px;
+      text-align: center;
+      transition: border-color 0.15s;
+    }
+    .cap:hover { border-color: var(--border-mid); }
+    .cap-icon {
+      font-size: 24px;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .cap-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      display: block;
+    }
+
+    /* ── ABOUT ───────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 680px;
+      gap: 0;
+    }
+    .about-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(42px, 5vw, 60px);
+      letter-spacing: 0.02em;
+      line-height: 0.95;
+      margin-bottom: 24px;
+    }
+    .about-title span { color: var(--cyan); }
+    .about-body {
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+    /* lead paragraph carries more weight than the rest */
+    .about-body:first-of-type {
+      font-size: 17px;
+      color: var(--text-primary);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .about-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 3px;
+      letter-spacing: 0.06em;
+    }
+    .about-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-top: 8px;
+    }
+    .pillar {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 18px;
+      transition: border-color 0.15s;
+    }
+    .pillar:hover { border-color: var(--border-mid); }
+    .pillar-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .pillar-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      display: block;
+      margin-bottom: 3px;
+    }
+    .pillar-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      display: block;
+    }
+
+    /* ── CONTACT ─────────────────────────────────────────── */
+    .contact-inner {
+      position: relative;
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 56px 32px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background:
+        radial-gradient(560px 260px at 50% 0%, rgba(0,229,255,0.07), transparent 70%),
+        linear-gradient(180deg, rgba(24,24,27,0.7), rgba(9,9,11,0.35));
+      overflow: hidden;
+    }
+    /* glowing hairline across the top of the panel */
+    .contact-inner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 15%; right: 15%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,229,255,0.55), transparent);
+    }
+    .contact-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 7vw, 80px);
+      letter-spacing: 0.02em;
+      line-height: 0.95;
+      margin: 16px 0 20px;
+    }
+    .contact-title span { color: var(--cyan); }
+    .contact-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      position: relative;
+      margin-top: 32px;
+      padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+    .footer-logo span { color: var(--cyan); }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.15s;
+      text-transform: uppercase;
+    }
+    .footer-links a {
+      position: relative;
+      padding-bottom: 3px;
+    }
+    .footer-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 100%; height: 1px;
+      background: var(--cyan);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s var(--ease);
+    }
+    .footer-links a:hover { color: var(--cyan); }
+    .footer-links a:hover::after { transform: scaleX(1); }
+    .footer-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── MODAL ───────────────────────────────────────────── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal {
+      background: linear-gradient(180deg, #1C1C20 0%, #141417 100%);
+      border: 1px solid var(--border-mid);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 580px;
+      width: 100%;
+      margin: 24px 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.03);
+      transform: translateY(24px) scale(0.985);
+      transition: transform 0.28s var(--ease);
+    }
+    /* glowing hairline across the top of the modal */
+    .modal::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,229,255,0.5), transparent);
+    }
+    .overlay.open .modal { transform: translateY(0) scale(1); }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 30px; height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
+      font-family: 'Inter', sans-serif;
+    }
+    .modal-close:hover {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.09);
+      border-color: var(--border-mid);
+    }
+
+    .modal-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .modal-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 18px;
+    }
+    .modal-logo {
+      display: block;
+      max-width: 220px;
+      height: auto;
+      margin-bottom: 18px;
+      opacity: 0.95;
+    }
+    .modal-body {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.78;
+      margin-bottom: 22px;
+    }
+    .modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 24px;
+    }
+    .modal-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 3px 9px;
+      border-radius: 3px;
+      letter-spacing: 0.06em;
+    }
+    .modal-hr { height: 1px; background: var(--border); margin-bottom: 22px; }
+    .modal-actions { display: flex; gap: 10px; }
+    .modal-video-label {
+      margin-top: 28px;
+      margin-bottom: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .modal-video-label span {
+      display: block;
+      margin-top: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--text-secondary);
+    }
+    .modal-video {
+      margin: 0 auto 8px;
+      width: 100%;
+      max-width: 320px;
+    }
+    .modal-video-ratio {
+      position: relative;
+      padding-bottom: 177.78%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #000;
+    }
+    .modal-video-ratio iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+
+    /* ── CARD SCREENSHOTS ───────────────────────────────── */
+    .card-shots {
+      margin: 10px 0 8px;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .card-shots::-webkit-scrollbar { display: none; }
+    .card-shot {
+      flex-shrink: 0;
+      height: 88px;
+      width: auto;
+      max-width: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+      cursor: zoom-in;
+      border: 1px solid var(--border);
+      transition: opacity 0.15s, border-color 0.15s;
+    }
+    .card-shot:hover { opacity: 0.8; border-color: var(--border-mid); }
+
+    /* ── MODAL SCREENSHOTS ──────────────────────────────── */
+    .modal-shots-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .modal-shots {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .modal-shot {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      cursor: zoom-in;
+      border: 1px solid var(--border);
+      transition: opacity 0.15s;
+    }
+    .modal-shot:hover { opacity: 0.85; }
+
+    /* ── LIGHTBOX ────────────────────────────────────────── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.93);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox-img {
+      max-width: 92vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 8px 60px rgba(0,0,0,0.7);
+    }
+    .lb-close {
+      position: fixed;
+      top: 18px; right: 22px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border-mid);
+      color: var(--text-primary);
+      font-size: 18px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10000;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lb-close:hover { background: rgba(255,255,255,0.15); }
+    .lb-nav {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border-mid);
+      color: var(--text-primary);
+      font-size: 22px;
+      padding: 14px 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      z-index: 10000;
+      line-height: 1;
+      display: none;
+    }
+    #lightbox.open .lb-nav { display: block; }
+    .lb-prev { left: 14px; }
+    .lb-next { right: 14px; }
+    .lb-counter {
+      position: fixed;
+      bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      z-index: 10000;
+    }
+
+    /* ── BOARD TABS ─────────────────────────────────────── */
+    .board-tabs { display: none; } /* tabs removed — scroll layout replaces them */
+
+    /* ── MOBILE ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+
+      /* Nav */
+      nav { padding: 0 20px; }
+      .nav-hide-mobile { display: none; }
+
+      /* Hero */
+      .hero { padding: 100px 20px 0; min-height: auto; }
+      .hero-desc { font-size: 14px; }
+
+      /* Sections */
+      section { padding: 64px 20px; }
+
+      /* Board — vertical sticky-scroll layout on mobile */
+      .board { display: flex; flex-direction: column; }
+      .board-col {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+      /* Reorder columns: Live first, then Prototypes, then Ideas last */
+      .board-col[data-col="0"] { order: 3; } /* Ideas */
+      .board-col[data-col="1"] { order: 2; } /* Prototypes */
+      .board-col[data-col="2"] { order: 1; } /* Live */
+      .col-head {
+        grid-column: 1 / -1;
+        position: sticky;
+        top: 56px;
+        z-index: 10;
+        padding: 14px 0;
+        margin-bottom: 4px;
+        background: rgba(9,9,11,0.90);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .card { margin-bottom: 0; }
+
+      /* Contact panel */
+      .contact-inner { padding: 40px 20px; border-radius: 14px; }
+
+      /* Modal */
+      .modal { padding: 28px 20px; border-radius: 14px; }
+      .modal-title { font-size: 38px; }
+
+      /* About */
+      .about-grid { max-width: 100%; }
+      .about-title { font-size: 42px; }
+
+      /* Footer */
+      footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 24px 20px;
+        gap: 16px;
+      }
+    }
+
+    /* ── SCROLL REVEAL ───────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+<svg class="bg-wordmark" viewBox="0 0 859 315" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path opacity="0.78" d="M858.4 157.8V177.018L770.616 282.18L769.931 283H858.4V310.1H721.5V291.377L807.388 185.515L808.05 184.7H721.3V157.8H858.4Z" stroke="#8B5CF6"/>
+  <path opacity="0.78" d="M637.8 155.1C658.512 155.1 673.983 160.7 684.283 171.815C694.59 182.937 699.8 199.668 699.8 222.1V310.2H666.1V221.7C666.1 209.248 663.667 199.817 658.718 193.492C653.752 187.143 646.314 184 636.5 184C626.888 184 619.577 187.042 614.684 193.176C609.809 199.289 607.4 208.396 607.4 220.4V310.2H573.9V223.7C573.9 200.719 579.26 183.588 589.879 172.203C600.491 160.825 616.437 155.1 637.8 155.1Z" fill="#18181B" stroke="#18181B"/>
+  <path opacity="0.78" d="M450.702 157.8L502.76 253.938L502.771 253.957L502.783 253.976C506.48 259.573 509.067 263.852 510.453 266.623L510.591 266.9H511.859L511.797 266.345C511.2 260.974 510.9 252.696 510.9 241.6V157.8H542.5V310.2H506.101L456.441 217.065L456.43 217.043L456.416 217.023L455.383 215.452C453.003 211.789 450.831 208.134 448.732 204.547L448.586 204.3H447.31L447.407 204.882C447.999 208.435 448.3 215.394 448.3 225.9V310.2H416.7V157.8H450.702Z" fill="#18181B" stroke="#18181B"/>
+  <path opacity="0.78" d="M359.5 157.8V310.2H326V157.8H359.5Z" fill="#18181B" stroke="#18181B"/>
+  <path opacity="0.78" d="M171.3 157.799C192.977 157.702 204.571 157.801 227.5 157.801C252.233 157.801 270.985 162.986 285.155 176.463V176.462C299.336 190.048 306.4 208.706 306.4 232.5C306.4 256.48 298.643 275.946 283.151 291.042C267.662 306.134 246.996 313.7 221.2 313.7C205.067 313.7 184.948 311.537 172.5 307.144V275.95C184.604 282.538 204.716 285.9 221.6 285.9C236.12 285.9 247.954 281.155 257.157 271.75C266.367 262.338 270.9 249.802 270.9 234.1C270.9 218.215 266.776 205.877 258.564 197.157C250.353 188.439 239.212 184.1 225.3 184.1C216.959 184.1 210.278 185.305 205.287 187.647L205 187.782V218.5H235.8V245.1H171.3V157.799Z" fill="#18181B" stroke="#18181B"/>
+  <path opacity="0.78" d="M37.2354 157.8L48.0234 191.552L48.1348 191.9H103.366L103.477 191.551L114.166 157.8H150.486L95.1494 310.1H54.8525L0.708008 157.8H37.2354ZM56.0234 218.052L72.5234 269.652C73.7104 273.411 74.6051 277.974 75.1025 283.346L75.1445 283.8H76.958L76.998 283.344C77.3953 278.875 78.1894 274.514 79.6748 270.058L79.6758 270.053L96.376 218.053L96.5859 217.4H55.8154L56.0234 218.052Z" fill="#18181B" stroke="#18181B"/>
+  <path opacity="0.78" d="M96.8469 0.5L150.991 152.9H114.364L103.576 119.147L103.465 118.8H48.2336L48.1232 119.149L37.4338 152.9H1.01385L56.55 0.5H96.8469ZM74.7023 27.3555C74.3051 31.8244 73.511 36.1853 72.0256 40.6416L72.0236 40.6484L55.5236 92.5488L55.3166 93.2002H95.8849L95.676 92.5479L79.176 41.0479C77.9881 37.1859 77.0949 32.7213 76.5978 27.3535L76.5558 26.9004H74.7424L74.7023 27.3555Z" fill="#18181B" stroke="#18181B"/>
+  <path opacity="0.78" d="M225.1 0.5C252.283 0.5 272.565 6.71113 286.05 19.0566C299.526 31.3944 306.3 49.9388 306.3 74.7998C306.3 98.5881 298.939 117.548 284.155 131.638L284.154 131.64C269.365 145.833 249.698 152.9 225.1 152.9H171.3V0.5H225.1ZM204.9 125.8H222.5C237.607 125.8 249.45 121.264 258.064 112.144C266.671 103.03 271 90.6955 271 75.0996C271 60.6288 266.899 49.1234 258.552 40.6455L258.152 40.2441C249.633 31.7267 237.591 27.5001 222.2 27.5H204.9V125.8Z" fill="#18181B" stroke="#18181B"/>
+  <path opacity="0.78" d="M380.3 0.5C398.852 0.5 412.675 3.96841 421.851 10.8252C430.999 17.6616 435.6 27.9229 435.6 41.7002C435.6 46.9507 434.807 51.8891 433.132 56.3232L433.129 56.332C431.55 60.7733 429.18 64.8226 426.216 68.3799C423.249 71.9401 419.691 75.1025 415.441 77.6719L415.437 77.6748C411.279 80.2487 406.521 82.3309 401.361 83.8193L401 83.9238V85.0703L401.354 85.1787C403.587 85.8582 405.734 87.0263 407.797 88.5977C409.873 90.1798 411.954 92.0617 413.938 94.1445C415.921 96.2269 417.806 98.5097 419.594 100.992C421.391 103.488 423.083 105.878 424.575 108.165L450.138 152.8H416.372L390.929 113.643C389.126 110.638 387.42 107.927 385.811 105.614C384.3 103.443 382.692 101.435 381.067 99.8477L380.743 99.5361C379.019 97.814 377.28 96.4809 375.424 95.5527C373.543 94.6122 371.463 94.2002 369.3 94.2002H359.5V152.9H326V0.5H380.3ZM359.4 69.0996H374.9C382.397 69.0995 388.53 66.9704 393.142 62.5654C397.85 58.1637 400.1 52.6275 400.1 46C400.1 39.1973 398.065 34.0118 393.908 30.541C389.768 27.0848 383.607 25.4004 375.5 25.4004H359.4V69.0996Z" fill="#18181B" stroke="#18181B"/>
+  <path opacity="0.78" d="M542.6 0.5V152.9H511V0.5H542.6Z" fill="#18181B" stroke="#18181B"/>
+  <path opacity="0.78" d="M650.747 0.5L704.892 152.9H668.364L657.476 119.146L657.364 118.8H602.134L602.024 119.149L591.334 152.9H555.014L610.449 0.5H650.747ZM628.602 27.2559C628.204 31.7248 627.411 36.0856 625.926 40.542L625.924 40.5469L609.224 92.5469L609.014 93.2002H649.784L649.576 92.5479L633.076 40.9473C631.889 37.0854 630.995 32.6215 630.498 27.2539L630.456 26.7998H628.643L628.602 27.2559Z" stroke="#00E5FF"/>
+  <path opacity="0.78" d="M757.729 0.5L818.482 93.6729L818.484 93.6777C821.275 97.8647 823.769 102.054 826.168 106.152L826.314 106.4H827.59L827.493 105.817C826.901 102.264 826.6 95.305 826.6 84.7998V0.5H858.2V152.9H824.07L761.018 56.7256L761.017 56.7246L759.683 54.6875C756.692 50.081 754.559 46.5014 753.347 44.0762L753.209 43.7998H751.942L752.003 44.3555C752.6 49.7266 752.9 58.0035 752.9 69.0996V152.9H721.3V0.5H757.729Z" fill="#18181B" stroke="#18181B"/>
+</svg>
+
+<div class="ambient" aria-hidden="true"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="content">
+
+  <!-- ── NAV ────────────────────────────────────────────── -->
+  <nav>
+    <a href="#home" class="nav-logo">ADRIAN ZUNIGA</a>
+    <ul class="nav-links">
+      <li class="nav-hide-mobile"><a href="#board">Board</a></li>
+      <li class="nav-hide-mobile"><a href="#about">About</a></li>
+      <li><a href="#contact" class="btn-nav">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────────── -->
+  <section class="hero" id="home">
+    <h1 class="hero-title">
+      <span style="color:var(--text-primary)">MY IDEAS</span><br>
+      <span class="c">IN PROGRESS</span>
+    </h1>
+    <p class="hero-desc">I like solving problems in new ways. Below is my backlog of projects, most built for me or my kids, a few you can actually go try. Click a card to see more.</p>
+    <a href="#board" class="scroll-cue"><i></i>The Board</a>
+  </section>
+
+  <!-- ── BOARD ──────────────────────────────────────────── -->
+  <section id="board">
+    <div class="section-header reveal">
+      <span class="section-tag" data-n="01">THE BOARD</span>
+      <div class="section-line"></div>
+      <span class="section-tag dim">ADRIANZUNIGA.COM</span>
+    </div>
+
+    <div class="board">
+
+      <!-- IDEAS -->
+      <div class="board-col" data-col="0">
+        <div class="col-head reveal">
+          <div class="col-dot id"></div>
+          <span class="col-label id">Idea Backlog</span>
+        </div>
+
+        <div class="card idea reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('livereaction')">
+          <div class="card-row">
+            <span class="card-year">APP // PUBLIC</span>
+            <span class="badge g">IDEA</span>
+          </div>
+          <div class="card-title">Live Reaction App</div>
+          <div class="card-desc">Real-time audience reactions and engagement for live events, presentations, or streams.</div>
+          <span class="card-cta" style="color:var(--text-muted)">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+      </div>
+
+      <!-- PROTOTYPES -->
+      <div class="board-col" data-col="1">
+        <div class="col-head reveal">
+          <div class="col-dot pt"></div>
+          <span class="col-label pt">Prototypes</span>
+        </div>
+
+        <div class="card v reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('savethedodo')">
+          <div class="card-row">
+            <span class="card-year">GAME // PUBLIC</span>
+            <span class="badge e">TRY IT!</span>
+          </div>
+          <img src="assets/logos/Save the Dodo transparent.png" alt="Save the Dodo" class="card-logo">
+          <div class="card-desc">A survival comedy where you can't control the hero. You can only nudge him. Keep a magnificently stupid dodo alive on an island where everything eats dodos.</div>
+          <span class="card-cta v">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card v reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('populi')">
+          <div class="card-row">
+            <span class="card-year">TOOL // PUBLIC</span>
+            <span class="badge e">JOIN US!</span>
+          </div>
+          <img src="assets/logos/populi-logo-dark-full.png" alt="The Populi Project" class="card-logo">
+          <div class="card-desc">My idea for saving democracy. A platform to surface what people actually think — verified, unfiltered, and built to scale.</div>
+          <span class="card-cta v">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card v reveal reveal-delay-2" role="button" tabindex="0" onclick="openModal('sourdough')">
+          <div class="card-row">
+            <span class="card-year">TOOL // PRIVATE</span>
+            <span class="badge v">PROTOTYPE</span>
+          </div>
+          <img src="assets/logos/SDscheduler-transparent-full.PNG" alt="Sourdough Scheduler" class="card-logo">
+          <div class="card-desc">Tell it when you want fresh bread and it works backward to plan every feeding, fold and proof around your sleep.</div>
+          <span class="card-cta v">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card v reveal" role="button" tabindex="0" onclick="openModal('scrolltune')">
+          <div class="card-row">
+            <span class="card-year">APP // PUBLIC</span>
+            <span class="badge v">PROTOTYPE</span>
+          </div>
+          <div class="card-title">Scrolltune</div>
+          <div class="card-desc">A pocket music sequencer. Draw notes onto a scrolling grid with your finger and four instruments loop them back.</div>
+          <span class="card-cta v">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card v reveal" role="button" tabindex="0" onclick="openModal('tokenoracle')">
+          <div class="card-row">
+            <span class="card-year">TOOL // PUBLIC</span>
+            <span class="badge v">PROTOTYPE</span>
+          </div>
+          <div class="card-title">Token Oracle</div>
+          <div class="card-desc">See inside the AI: watch token prediction happen, step by step.</div>
+          <span class="card-cta v">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+      </div>
+
+      <!-- LIVE -->
+      <div class="board-col" data-col="2">
+        <div class="col-head reveal">
+          <div class="col-dot ea"></div>
+          <span class="col-label ea">Live</span>
+        </div>
+
+        <div class="card reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('speeder')">
+          <div class="card-row">
+            <span class="card-year">GAME // PUBLIC</span>
+            <span class="badge e">TRY IT!</span>
+          </div>
+          <img src="assets/logos/Speeder transparent.png" alt="Speeder" class="card-logo">
+          <div class="card-desc">A one-thumb neon hover-racer for your phone. Race through five worlds, chase down a boss, and loop back faster every time. Left. Right. No brakes.</div>
+          <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card reveal reveal-delay-2" role="button" tabindex="0" onclick="openModal('orbit')">
+          <div class="card-row">
+            <span class="card-year">GAME // PUBLIC</span>
+            <span class="badge e">TRY IT!</span>
+          </div>
+          <img src="assets/logos/ORBit-logo-dark.png" alt="ORBit" class="card-logo">
+          <div class="card-desc">A gravity sandbox game. Launch planets into orbit, keep them stable, and survive as your star evolves into a black hole.</div>
+          <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card reveal reveal-delay-2" role="button" tabindex="0" onclick="openModal('letterpop')">
+          <div class="card-row">
+            <span class="card-year">GAME // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <img src="assets/logos/Letter Pop wide.png" alt="Letter Pop!" class="card-logo card-logo-banner">
+          <div class="card-desc">An arcade letter-recognition game for pre-readers — built for my 5-year-old. Slide to aim, pop the letter the voice calls out, collect emoji.</div>
+          <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card reveal reveal-delay-3" role="button" tabindex="0" onclick="openModal('aroundtheworld')">
+          <div class="card-row">
+            <span class="card-year">APP // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <img src="assets/logos/Around the World transparent.png" alt="Around the World" class="card-logo">
+          <div class="card-desc">An interactive 3D globe of my family's travels, with flight paths, road trips and a timeline you can play back, built from years of old flight confirmation emails.</div>
+          <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('timetracker')">
+          <div class="card-row">
+            <span class="card-year">APP // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <img src="assets/logos/Dayline transparent.png" alt="Dayline" class="card-logo">
+          <div class="card-desc">A one-tap time tracker that shows exactly where my hours go: every day as a color strip, my typical day, and my real sleep and work averages.</div>
+          <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card reveal reveal-delay-2" role="button" tabindex="0" onclick="openModal('shopping')">
+          <div class="card-row">
+            <span class="card-year">APP // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <img src="assets/logos/Z shopping list transparent.png" alt="Shopping List" class="card-logo">
+          <div class="card-desc">A shared grocery list that syncs live across our phones. Snap a receipt after a trip and it reads every item and price.</div>
+          <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card reveal reveal-delay-3" role="button" tabindex="0" onclick="openModal('financetracker')">
+          <div class="card-row">
+            <span class="card-year">APP // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <img src="assets/logos/Z Finance transparent.png" alt="Z Finance" class="card-logo">
+          <div class="card-desc">A household finance dashboard that pulls every account into one place and follows the money all the way from paycheck to grocery shelf.</div>
+          <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('theo')">
+          <div class="card-row">
+            <span class="card-year">APP // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <div class="card-title">Speech Adventure</div>
+          <div class="card-desc">A T-Rex adventure game that turns speech practice words into play. Built for my son, who asks to play it constantly.</div>
+          <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+
+        <div class="card reveal reveal-delay-2" role="button" tabindex="0" onclick="openModal('unicornmath')">
+          <div class="card-row">
+            <span class="card-year">APP // PRIVATE</span>
+            <span class="badge a">PERSONAL</span>
+          </div>
+          <img src="assets/logos/Unicorn Math Kingdom transparent.png" alt="Unicorn Math Kingdom" class="card-logo">
+          <div class="card-desc">A story-driven math game built for my daughter. She frees five stolen Color Crystals from a rainbow kingdom by solving math problems, and she plays it nonstop.</div>
+          <span class="card-cta c">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ── ABOUT ──────────────────────────────────────────── -->
+  <section id="about">
+    <div class="section-header reveal">
+      <span class="section-tag" data-n="02">ABOUT ME</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <h2 class="about-title">ADRIAN<br><span>ZUNIGA.</span></h2>
+        <p class="about-body">I'm a dude that loves to solve problems in new ways and learning through making. Whether that's in my day-to-day work as a product manager or through side projects.</p>
+        <p class="about-body">I'm also a father, an optimist, and a traveler based in the Pacific Northwest. I value wisdom, curiosity, proactivity, and courage.</p>
+        <p class="about-body">This site is a home for my backlog of ideas, experiments, and side projects. Some fun, some practical, some for my kids, and one that I believe can change the course of history.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ─────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <span class="section-tag" data-n="03">GET IN TOUCH</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-inner reveal">
+      <p class="hero-tag" style="display:block;text-align:center;">SAY HELLO</p>
+      <h2 class="contact-title">LET'S<br><span>CONNECT.</span></h2>
+      <p class="contact-desc">If something here caught your eye, or you just want to say hi — I'm easy to reach.</p>
+      <a href="mailto:contact@adrianzuniga.com" class="btn-primary" style="display:inline-flex;margin:0 auto;">GET IN TOUCH &nbsp;→</a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────────────────── -->
+  <footer>
+    <span class="footer-logo">ADRIAN ZUNIGA</span>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/adrian-zuniga-152068166/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:contact@adrianzuniga.com">Email</a>
+    </div>
+    <span class="footer-copy">AZ · <span id="year">2026</span></span>
+  </footer>
+
+</div>
+
+<!-- ── MODAL ───────────────────────────────────────────── -->
+<div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-meta"  id="m-meta"></div>
+    <div class="modal-title" id="m-title"></div>
+    <div class="modal-body"  id="m-body"></div>
+    <div class="modal-tags"  id="m-tags"></div>
+    <div class="modal-hr"></div>
+    <div id="m-video"></div>
+    <div id="m-shots"></div>
+    <div class="modal-actions" id="m-actions"></div>
+  </div>
+</div>
+
+<!-- ── LIGHTBOX ─────────────────────────────────────────── -->
+<div id="lightbox" onclick="lbBgClick(event)">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-nav lb-prev" onclick="lbNav(-1)">&#8249;</button>
+  <img id="lightbox-img" src="" alt="">
+  <button class="lb-nav lb-next" onclick="lbNav(1)">&#8250;</button>
+  <span class="lb-counter" id="lb-counter"></span>
+</div>
+
+<script>
+/* ── CANVAS ANIMATION ─────────────────────────────────────── */
+const canvas = document.getElementById('bg-canvas');
+const ctx    = canvas.getContext('2d');
+let W, H;
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const CELL = 46;
+const pulses = [];
+
+const nodes = Array.from({ length: 10 }, () => ({
+  x: 0, y: 0,
+  life: Math.random(),
+  decay: 0.003 + Math.random() * 0.006,
+}));
+nodes.forEach(nd => {
+  nd.x = Math.floor(Math.random() * 30) * CELL;
+  nd.y = Math.floor(Math.random() * 20) * CELL;
+});
+
+function spawnPulse() {
+  const horiz  = Math.random() > 0.45;
+  const isCyan = Math.random() > 0.7;
+  const color  = isCyan ? [0, 229, 255] : [139, 92, 246];
+  const speed  = 1.5 + Math.random() * 1.6;
+  const trail  = 48 + Math.random() * 44;
+  if (horiz) {
+    const row = Math.floor(Math.random() * Math.ceil(H / CELL));
+    pulses.push({ x: -30, y: row * CELL, dx: speed, dy: 0, color, trail });
+  } else {
+    const col = Math.floor(Math.random() * Math.ceil(W / CELL));
+    pulses.push({ x: col * CELL, y: -30, dx: 0, dy: speed, color, trail });
+  }
+}
+for (let i = 0; i < 8; i++) spawnPulse();
+
+function drawFrame() {
+  ctx.clearRect(0, 0, W, H);
+
+  const cols = Math.ceil(W / CELL) + 1;
+  const rows = Math.ceil(H / CELL) + 1;
+  ctx.strokeStyle = 'rgba(0,229,255,0.036)';
+  ctx.lineWidth   = 1;
+  for (let c = 0; c <= cols; c++) {
+    ctx.beginPath(); ctx.moveTo(c * CELL, 0); ctx.lineTo(c * CELL, H); ctx.stroke();
+  }
+  for (let r = 0; r <= rows; r++) {
+    ctx.beginPath(); ctx.moveTo(0, r * CELL); ctx.lineTo(W, r * CELL); ctx.stroke();
+  }
+
+  for (const nd of nodes) {
+    nd.life -= nd.decay;
+    if (nd.life <= 0) {
+      nd.x   = Math.floor(Math.random() * Math.ceil(W / CELL)) * CELL;
+      nd.y   = Math.floor(Math.random() * Math.ceil(H / CELL)) * CELL;
+      nd.life  = 0.4 + Math.random() * 0.6;
+      nd.decay = 0.003 + Math.random() * 0.006;
+    }
+    ctx.beginPath();
+    ctx.arc(nd.x, nd.y, 1.5 + nd.life * 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,229,255,${nd.life * 0.2})`;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(nd.x, nd.y, 1.5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,229,255,${nd.life * 0.65})`;
+    ctx.fill();
+  }
+
+  for (let i = pulses.length - 1; i >= 0; i--) {
+    const p  = pulses[i];
+    p.x += p.dx; p.y += p.dy;
+    const [r,g,b] = p.color;
+    const tx = p.x - p.dx * p.trail;
+    const ty = p.y - p.dy * p.trail;
+    const grd = ctx.createLinearGradient(tx, ty, p.x, p.y);
+    grd.addColorStop(0,   `rgba(${r},${g},${b},0)`);
+    grd.addColorStop(0.65,`rgba(${r},${g},${b},0.14)`);
+    grd.addColorStop(1,   `rgba(${r},${g},${b},0.8)`);
+    ctx.beginPath();
+    ctx.strokeStyle = grd;
+    ctx.lineWidth   = 1.5;
+    ctx.moveTo(tx, ty); ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${r},${g},${b},0.9)`;
+    ctx.fill();
+    if (p.x > W + 80 || p.y > H + 80) {
+      pulses.splice(i, 1);
+      spawnPulse();
+    }
+  }
+  requestAnimationFrame(drawFrame);
+}
+drawFrame();
+
+/* ── BROKEN IMAGE GUARD ───────────────────────────────────── */
+/* Hosting is case-sensitive even though Windows isn't, so a wrong-case
+   filename 404s only once live. If a card logo fails, fall back to the
+   text title instead of leaving a broken-image gap. */
+document.addEventListener('error', e => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement)) return;
+  console.warn('[image failed]', img.getAttribute('src'));
+  if (img.classList.contains('card-logo') || img.classList.contains('modal-logo')) {
+    const title = document.createElement('div');
+    title.className = img.classList.contains('modal-logo') ? 'modal-title' : 'card-title';
+    title.textContent = img.alt || '';
+    img.replaceWith(title);
+  } else {
+    img.style.display = 'none';
+  }
+}, true);
+
+/* ── KEYBOARD ACCESS FOR CARDS ────────────────────────────── */
+document.querySelectorAll('.card[role="button"]').forEach(card => {
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      card.click();
+    }
+  });
+});
+
+/* ── FOOTER YEAR ──────────────────────────────────────────── */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ── SCROLL REVEAL ────────────────────────────────────────── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── NAV ACTIVE STATE ─────────────────────────────────────── */
+const navAs    = document.querySelectorAll('.nav-links a[href^="#"]');
+const sections = document.querySelectorAll('section[id]');
+const navEl    = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+  navAs.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+  });
+  navEl.classList.toggle('scrolled', window.scrollY > 24);
+}, { passive: true });
+
+/* ── MODAL ────────────────────────────────────────────────── */
+const DATA = {
+  savethedodo: {
+    title: 'SAVE THE DODO',
+    logo:  'assets/logos/Save the Dodo transparent.png',
+    screenshots: ['assets/images/Save the Dodo 1.jpg','assets/images/Save the Dodo 2.jpg','assets/images/Save the Dodo 3.jpg','assets/images/Save the Dodo 4.jpg','assets/images/Save the Dodo 5.jpg'],
+    meta:  'GAME // PUBLIC',
+    badge: '<span class="badge e">TRY IT!</span>',
+    body:  "You can't control the hero. You can only nudge him. Save the Dodo is a survival comedy about keeping a magnificently stupid dodo alive on an island where everything eats dodos, while he farts, sneezes, trips over his own feet and stops for berries in the middle of a T-rex chase.\n\nThe one design rule: every joke is also a threat. When he farts, the T-rex follows the smell. When he sneezes, the sabertooths wake up. You get four moves (nudge, hush, honk and jump), and every run ends on a polaroid with a cause of death, like \"Stopped for a berry. During a T-rex chase.\"\n\nRight now it's a browser prototype built in three.js to answer one question before I commit to a real game engine: is negotiating with this bird actually fun? If it is, the long-term goal is Steam.",
+    tags:  ['GAME','THREE.JS','PWA','AI-ASSISTED','PROTOTYPE'],
+    link:  'https://az-build.github.io/Save-the-Dodo/',
+    cta:   'PLAY NOW',
+  },
+  speeder: {
+    title: 'SPEEDER',
+    logo:  'assets/logos/Speeder transparent.png',
+    screenshots: ['assets/images/Speeder v2 1.jpg','assets/images/Speeder v2 2.jpg','assets/images/Speeder v2 3.jpg','assets/images/Speeder v2 4.jpg','assets/images/Speeder v2 5.jpg','assets/images/Speeder v2 6.jpg','assets/images/Speeder v2 7.jpg'],
+    meta:  'GAME // PUBLIC',
+    badge: '<span class="badge e">TRY IT!</span>',
+    body:  "I wanted a fast arcade game I could play on my phone for two minutes and immediately want one more run. You steer a hover-speeder left and right down a neon road, and that's the whole control scheme. Your guns fire on their own, so steering is how you dodge, aim and pick your power-ups.\n\nThe main mode, Warp Run, takes you through five worlds, each ending in a warp gate you can see the next world through. A boss called the Warden waits at the end, and beating it loops you back to the start, faster. There's a hands-on tutorial called Flight School, a world leaderboard, and challenge links so your friends can try to beat your score.\n\nIt's a single HTML file with homemade pseudo-3D and no game engine, and it installs to your phone and works offline. There's even a Lab mode where players can try ideas I'm still deciding on and vote on them.",
+    tags:  ['GAME','HTML5 CANVAS','PWA','LEADERBOARD','AI-ASSISTED'],
+    link:  'https://speeder-game.com/',
+    cta:   'PLAY NOW',
+  },
+  orbit: {
+    title: 'ORBIT',
+    logo:  'assets/logos/ORBit-logo-dark.png',
+    meta:  'GAME // PUBLIC',
+    badge: '<span class="badge e">TRY IT!</span>',
+    body:  "ORBit started as a way to show my kids how gravity works: launch a planet and watch physics take over. It grew into a real game. You put planets in orbit around a star and try to keep them there. Stable orbits score points, a perfect circle scores 10x, and drifting too close to the sun or out of bounds loses the planet.\n\nThe twist is that your star is aging, from yellow dwarf to red giant to neutron star to black hole, and the game ends when it collapses. What started as a dad project in a Claude chat became a game anyone can play in the browser.",
+    tags:  ['PHYSICS SANDBOX','HTML5 CANVAS','AI-ASSISTED','CLAUDE','GAME'],
+    link:  'https://az-build.github.io/zen-drift/ORBit.html',
+    cta:   'PLAY NOW',
+    video:  'https://www.youtube.com/embed/6pTRa4HsVu0',
+    videoNote: 'How a gravity lesson for my kids turned into a real game.',
+  },
+  financetracker: {
+    title: 'Z FINANCE',
+    logo:  'assets/logos/Z Finance transparent.png',
+    screenshots: ['assets/images/Z Finance sample 1.jpg','assets/images/Z Finance sample 2.jpg','assets/images/Z Finance sample 3.jpg','assets/images/Z Finance sample 4.jpg'],
+    meta:  'APP // PRIVATE',
+    badge: '<span class="badge a">PERSONAL</span>',
+    body:  "Our money was spread across a bunch of different accounts, and I had no single place to see the whole picture. So I built one. Z Finance imports bank statements, tags every transaction automatically, and answers the basic questions: are we saving each month, and where does it all go?\n\nThe part I'm proudest of goes down to the item level. Store receipts and online orders get matched to the bank charge they belong to, so one big warehouse-store run splits into groceries, household stuff and everything else. That powers a price tracker for things we buy often, a comparison against national spending averages, and a short plain-English money recap every month.\n\nThe screenshots below run on a made-up household, so none of the numbers are ours. It's been one of the most useful things I've built.",
+    tags:  ['APP','FINANCE','DATA VIZ','RECEIPT MATCHING','AI-ASSISTED'],
+    link:  null,
+  },
+  shopping: {
+    title: 'SHOPPING LIST',
+    logo:  'assets/logos/Z shopping list transparent.png',
+    screenshots: ['assets/images/Z Shopping List App 1.PNG','assets/images/Z Shopping List App 2.PNG','assets/images/Z Shopping List App 3.PNG','assets/images/Z Shopping List App 4.PNG'],
+    meta:  'APP // PRIVATE',
+    badge: '<span class="badge a">PERSONAL</span>',
+    body:  "Grocery shopping in our house is a team effort, so I built a shared list that syncs live across our phones. Add something and it shows up for everyone instantly, sorted by store and section, and items check off as we shop.\n\nThen I added receipt scanning. Snap a photo after a trip and it reads every item and price, adds anything that wasn't on the list, and saves the trip. Those receipts also feed my finance dashboard, Z Finance, so a big grocery run can be split into what we actually bought. It's built with React and Firebase.",
+    tags:  ['APP','REACT','FIREBASE','REALTIME SYNC','RECEIPT SCANNING'],
+    link:  null,
+  },
+  populi: {
+    title: 'THE POPULI PROJECT',
+    logo:  'assets/logos/populi-logo-dark-full.png',
+    screenshots: ['assets/images/Populi Project 1.png','assets/images/Populi Project 2.png'],
+    meta:  'TOOL // PUBLIC',
+    badge: '<span class="badge e">JOIN US!</span>',
+    body:  "We've built governments, institutions and media that are supposed to represent what the public wants, but we rarely stop to ask people what they actually think.\n\nPopuli is a platform where verified people (not bots, not algorithms, not just the loudest voices) weigh in on the questions that shape their lives. The result is a live, trustworthy signal of where the public really stands. The moderate majority has always existed. It's just never had the infrastructure.\n\nIt's starting small, city by city and question by question, and it's built to grow from there. If that sounds like something you'd want to be part of, come join us.",
+    tags:  ['COMMUNITY','INSIGHTS','PROTOTYPE','TOOL'],
+    link:  'https://www.thepopuliproject.org/',
+    cta:   'VISIT SITE',
+    link2: 'https://www.thepopuliproject.org/vision',
+    cta2:  'READ THE MANIFESTO',
+  },
+  letterpop: {
+    title: 'LETTER POP!',
+    logo:  'assets/logos/Letter Pop wide.png',
+    logoBanner: true,
+    screenshots: ['assets/images/Letter Pop 1.PNG','assets/images/Letter Pop 2.PNG','assets/images/Letter Pop 3.PNG'],
+    meta:  'GAME // PRIVATE',
+    badge: '<span class="badge a">PERSONAL</span>',
+    body:  "My son was learning his letters, and flashcards lasted about four minutes. So I built a game he'd pick on his own. Bubbles drift down the screen, a friendly voice says \"Pop the B!\", and he slides his finger to aim a cannon and fire. There are modes for letters, numbers and spelling simple words.\n\nThe tricky part wasn't the code. It was designing for a player who can't read, hates losing, and won't tell you why he stopped playing. Steering works anywhere on the bottom half of the screen for small fingers, wrong answers cost nothing, and the difficulty adjusts itself. The biggest hook turned out to be a treasure chest of collectible emoji.\n\nIt's a single web page that uses the browser's built-in voice, and it installs to the phone and works offline in the car.",
+    tags:  ['GAME','EDUCATION','HTML5 CANVAS','PWA','KIDS'],
+    link:  null,
+  },
+  theo: {
+    title:  "SPEECH ADVENTURE",
+    screenshots:  ['assets/images/theospeech3.PNG'],
+    meta:  'APP // PRIVATE',
+    badge: '<span class="badge a">PERSONAL</span>',
+    body:  "Practice words stick better when they're part of a game, so I built one for my son. A friendly T-Rex guides him through each word: he hears it, says it, and earns stars and treasures along the way, with a few heroes to pick from.\n\nIt covers 142 practice words, and he asks to play it all the time. It's a lightweight browser game, so it runs on any device with nothing to install.",
+    tags:  ['APP','GAME','SPEECH PRACTICE','KIDS'],
+    link:  null,
+  },
+  aroundtheworld: {
+    title: 'AROUND THE WORLD',
+    logo:  'assets/logos/Around the World transparent.png',
+    screenshots:  ['assets/images/aroundtheworld1.PNG'],
+    meta:  'APP // PRIVATE',
+    badge: '<span class="badge a">PERSONAL</span>',
+    body:  "I wanted to see every trip my family has taken in one place, but the details were buried in years of old emails. So I dug out the flight confirmations and built a 3D globe that draws every trip as an arc or a road route.\n\nYou can scrub through a timeline and watch the trips play out in order, see a map of every country and state we've been to, and add missing trips as I find them. It's built with Globe.gl, installs to my phone, and is password-protected for family only.",
+    tags:  ['APP','DATA VIZ','GLOBE.GL','TRAVEL','PWA'],
+    link:  null,
+  },
+  unicornmath: {
+    title: 'UNICORN MATH KINGDOM',
+    logo:  'assets/logos/Unicorn Math Kingdom transparent.png',
+    screenshots: ['assets/images/unicorn2.PNG','assets/images/unicorn3.PNG','assets/images/unicorn4.PNG','assets/images/unicorn5.PNG'],
+    meta:  'APP // PRIVATE',
+    badge: '<span class="badge a">PERSONAL</span>',
+    body:  "My daughter needed math practice, so I wrapped it in a story she'd care about. The Gray Mist has stolen the Rainbow's colors, and she travels through five lands solving problems (place value, fractions, money, time and more) to win each Color Crystal back.\n\nI leaned on how kids actually learn. A wrong answer brings up a hint or a picture instead of just showing the answer, the difficulty adjusts quietly, and most answers are typed instead of multiple choice. She earns gems to dress up her own unicorn, and she plays it nonstop.\n\nIt's one HTML file with hand-drawn art, and it installs to the phone and works offline.",
+    tags:  ['APP','GAME','EDUCATION','PWA','KIDS'],
+    link:  null,
+  },
+  scrolltune: {
+    title: 'SCROLLTUNE',
+    meta:  'APP // PUBLIC',
+    badge: '<span class="badge v">PROTOTYPE</span>',
+    body:  "Scrolltune is a little music sketchpad for my phone. It's a looping sequencer: the grid scrolls past a playhead, and you draw notes right onto it with your finger to build a beat or a melody.\n\nThere are four instruments, notes snap to the beat so everything stays in time, and you can change how long the loop is. It's a single HTML file with a dark neon look, and I built and tested it right on my iPhone.",
+    tags:  ['APP','MUSIC','SEQUENCER','HTML5','PROTOTYPE'],
+    link:  null,
+  },
+  sourdough: {
+    title: 'SOURDOUGH SCHEDULER',
+    logo:  'assets/logos/SDscheduler-transparent-full.PNG',
+    screenshots: ['assets/images/Sourdough 1.png','assets/images/Sourdough 2.png','assets/images/Sourdough 3.png'],
+    meta:  'TOOL // PRIVATE',
+    badge: '<span class="badge v">PROTOTYPE</span>',
+    body:  "Sourdough runs on its own clock. Between feeding the starter, waiting for it to peak, mixing, folds, shaping and proofing, one loaf takes about a day, and it's easy to end up with a step landing at 3 a.m.\n\nSo I built a scheduler that works backward from when I want fresh bread. Pick the day, how many loaves and what time, tell it when you sleep, and it lays out every step on a timeline. Then it walks you through each one with exact amounts, and it can check your Google Calendar for busy times.",
+    tags:  ['TOOL','FOOD','SCHEDULER','PROTOTYPE'],
+    link:  null,
+  },
+  timetracker: {
+    title: 'DAYLINE',
+    logo:  'assets/logos/Dayline transparent.png',
+    screenshots:  ['assets/images/Time Tracker v2 1.jpg','assets/images/Time Tracker v2 3.jpg','assets/images/Time Tracker v2 4.jpg'],
+    meta:  'APP // PRIVATE',
+    badge: '<span class="badge a">PERSONAL</span>',
+    body:  "I wanted to know where my time actually goes. Not for work or billing, just for me. Dayline is a one-tap tracker: tap what I'm doing and it starts timing, tap something else and it switches. If I forget, I fix it on the timeline in one tap.\n\nThe payoff is the Insights screen: where the hours went over any date range, a color strip for every day, and averages I'd never track by hand, like sleep and hours worked. It installs to my phone like an app and works offline.",
+    tags:  ['APP','PRODUCTIVITY','DATA VIZ','PWA','FIREBASE'],
+    link:  null,
+  },
+  livereaction: {
+    title: 'LIVE REACTION APP',
+    meta:  'APP // PUBLIC',
+    badge: '<span class="badge g">IDEA</span>',
+    body:  "Most live presentations are one-way. The presenter talks and has no idea how it's landing until the questions at the end.\n\nThe idea is a simple way for an audience to react in real time, with emoji reactions, quick polls and a live read on the mood, shown somewhere the presenter can actually see it and adjust on the fly.",
+    tags:  ['APP','LIVE','EVENTS','ENGAGEMENT','IDEA'],
+    screenshots: ['assets/images/Reaction App 1.png','assets/images/Reaction App 2.png'],
+    link:  null,
+  },
+  tokenoracle: {
+    title: 'TOKEN ORACLE',
+    meta:  'TOOL // PUBLIC',
+    badge: '<span class="badge v">PROTOTYPE</span>',
+    body:  "Every time an AI writes a sentence, it's choosing one word at a time from thousands of possibilities. I wanted to actually see that happen, so I built Token Oracle.\n\nType any prompt and it plays out as a short animation: attention arcs light up across your words, candidate words orbit the screen sized by how likely they are, and the winner lands in the center. It uses real Claude API calls, so every prediction you see is genuine.",
+    tags:  ['AI','VISUALIZATION','CLAUDE API','PROTOTYPE','TOOL'],
+    screenshots: ['assets/images/Token Oracle 1.png','assets/images/Token Oracle 2.png'],
+    video:  'https://www.youtube.com/embed/WkdJfGYPB2E',
+    videoNote: 'Turning an AI picking its next word into something you can watch.',
+    link:  null,
+  },
+};
+
+function openModal(id) {
+  const d = DATA[id];
+  if (!d) return;
+  document.getElementById('m-meta').innerHTML  = `<span>${d.meta}</span>${d.badge}`;
+  if (d.logo) {
+    const logoCls = d.logoBanner ? 'modal-logo modal-logo-banner' : 'modal-logo';
+    document.getElementById('m-title').innerHTML = `<img src="${d.logo}" alt="${d.title}" class="${logoCls}">`;
+  } else {
+    document.getElementById('m-title').textContent = d.title;
+  }
+  const videoEl = document.getElementById('m-video');
+  if (d.video) {
+    videoEl.innerHTML = `
+      <div class="modal-video-label">Behind the build
+        <span>${d.videoNote || ''}</span>
+      </div>
+      <div class="modal-video"><div class="modal-video-ratio"><iframe src="${d.video}?rel=0&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>`;
+  } else {
+    videoEl.innerHTML = '';
+  }
+  document.getElementById('m-body').innerHTML = d.body
+    .split('\n\n')
+    .map(p => `<p style="margin-bottom:14px">${p}</p>`)
+    .join('');
+  const shotsEl = document.getElementById('m-shots');
+  if (d.screenshots && d.screenshots.length) {
+    shotsEl.innerHTML = `<div class="modal-shots-label">Screenshots</div><div class="modal-shots">${
+      d.screenshots.map((src, i) =>
+        `<img src="${src}" class="modal-shot" alt="Screenshot ${i+1}" onclick="openLightbox(${JSON.stringify(d.screenshots)},${i})">`
+      ).join('')
+    }</div>`;
+  } else {
+    shotsEl.innerHTML = '';
+  }
+  document.getElementById('m-tags').innerHTML    = d.tags.map(t =>
+    `<span class="modal-tag">${t}</span>`).join('');
+  const ctaLabel = d.cta || 'VISIT LIVE SITE';
+  let actions = '';
+  if (d.link)  actions += `<a href="${d.link}"  target="_blank" rel="noopener" class="btn-primary">${d.cta || 'VISIT SITE'} &nbsp;→</a>`;
+  if (d.link2) actions += `<a href="${d.link2}" target="_blank" rel="noopener" class="btn-secondary">${d.cta2 || 'LEARN MORE'}</a>`;
+  if (!d.link) actions += `<button class="btn-secondary" onclick="closeModal()">Close</button>`;
+  document.getElementById('m-actions').innerHTML = actions;
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('m-video').innerHTML = '';
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('overlay')) closeModal();
+}
+
+/* ── LIGHTBOX ─────────────────────────────────────────────── */
+let lbShots = [];
+let lbIdx   = 0;
+
+function openLightbox(shots, i) {
+  lbShots = shots || [];
+  lbIdx   = i || 0;
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderLightbox() {
+  document.getElementById('lightbox-img').src = lbShots[lbIdx];
+  document.getElementById('lb-counter').textContent = `${lbIdx + 1} / ${lbShots.length}`;
+}
+
+function lbNav(dir) {
+  if (!lbShots.length) return;
+  lbIdx = (lbIdx + dir + lbShots.length) % lbShots.length;
+  renderLightbox();
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  if (!document.getElementById('overlay').classList.contains('open')) {
+    document.body.style.overflow = '';
+  }
+}
+
+function lbBgClick(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+
+/* ── KEYBOARD ─────────────────────────────────────────────── */
+document.addEventListener('keydown', e => {
+  const lbOpen = document.getElementById('lightbox').classList.contains('open');
+  if (e.key === 'Escape') {
+    closeLightbox();
+    closeModal();
+  } else if (lbOpen && e.key === 'ArrowLeft') {
+    lbNav(-1);
+  } else if (lbOpen && e.key === 'ArrowRight') {
+    lbNav(1);
+  }
+});
+
+/* ── COLUMN CARD COUNTS ───────────────────────────────────── */
+document.querySelectorAll('.board-col').forEach(col => {
+  const count = col.querySelectorAll('.card').length;
+  const label = col.querySelector('.col-label');
+  if (label) {
+    const span = document.createElement('span');
+    span.className = 'col-count';
+    span.textContent = count;
+    label.insertAdjacentElement('afterend', span);
+  }
+});
+</script>
+</body>
+</html>
