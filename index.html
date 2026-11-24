@@ -21,7 +21,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Tilt+Neon&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1008,6 +1008,117 @@
       border: 0;
     }
 
+    /* ── BOUNCE LAB: a collection card that shows its games ── */
+    .card.lab {
+      background:
+        radial-gradient(120% 70% at 100% 0%, rgba(255,63,180,0.10), transparent 60%),
+        radial-gradient(90% 60% at 0% 100%, rgba(62,246,255,0.06), transparent 60%),
+        var(--card-grad);
+      border-color: rgba(255,63,180,0.22);
+    }
+    .card.lab::after { background: #ff3fb4; }
+    .card.lab:hover,
+    .card.lab:focus-visible {
+      border-color: rgba(255,63,180,0.45);
+      box-shadow: 0 0 0 1px rgba(255,63,180,0.10),
+                  0 0 32px rgba(255,63,180,0.10),
+                  0 12px 32px rgba(0,0,0,0.55);
+    }
+    .lab-wordmark {
+      font-family: 'Tilt Neon', 'Bebas Neue', sans-serif;
+      font-size: 38px;
+      line-height: 1;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      margin: 2px 0 10px;
+      color: #ffe3f6;
+      text-shadow: 0 0 4px #ff3fb4, 0 0 12px rgba(255,63,180,0.85),
+                   0 0 28px rgba(255,63,180,0.55);
+    }
+    .modal-title .lab-wordmark { font-size: 56px; min-height: 0; margin: 0; }
+    .lab-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin: 0 0 8px;
+    }
+    .lab-shelf { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin-bottom: 14px; }
+    .lab-game { min-width: 0; }
+    .lab-game {
+      --g: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.25);
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease);
+    }
+    .lab-game:hover,
+    .lab-game:focus-visible {
+      border-color: color-mix(in srgb, var(--g) 55%, transparent);
+      background: color-mix(in srgb, var(--g) 8%, rgba(0,0,0,0.25));
+      transform: translateX(2px);
+      outline: none;
+    }
+    .lab-icon {
+      flex: none;
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 4px 12px rgba(0,0,0,0.5);
+      transition: box-shadow 0.2s var(--ease);
+    }
+    .lab-game:hover .lab-icon,
+    .lab-game:focus-visible .lab-icon {
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--g) 60%, transparent),
+                  0 0 14px color-mix(in srgb, var(--g) 45%, transparent);
+    }
+    .lab-head { display: flex; align-items: center; gap: 12px; margin: 2px 0 10px; }
+    .lab-head .lab-wordmark { margin: 0; }
+    .lab-head img {
+      width: 46px; height: 46px; border-radius: 11px; flex: none;
+      box-shadow: 0 0 0 1px rgba(255,63,180,0.25), 0 0 18px rgba(255,63,180,0.18);
+    }
+    .modal-title .lab-head img { width: 64px; height: 64px; border-radius: 15px; }
+    .lab-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .lab-txt b {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: 17px;
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+    }
+    .lab-txt small {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+    .lab-ver {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+    .lab-play {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--g);
+      white-space: nowrap;
+    }
+    /* modal version: roomier tiles with the controls line */
+    .lab-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 26px; }
+    .lab-grid .lab-game { align-items: flex-start; padding: 12px; }
+    .lab-grid .lab-icon { width: 56px; height: 56px; border-radius: 13px; }
+    .lab-grid .lab-ctl { font-size: 11px; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+    .lab-grid .lab-foot { display: flex; justify-content: space-between; margin-top: 8px; }
+    @media (max-width: 560px) { .lab-grid { grid-template-columns: minmax(0, 1fr); } }
+
     /* ── CARD SCREENSHOTS ───────────────────────────────── */
     .card-shots {
       margin: 10px 0 8px;
@@ -1329,6 +1440,18 @@
         <div class="col-head reveal">
           <div class="col-dot ea"></div>
           <span class="col-label ea">Live</span>
+        </div>
+
+        <div class="card lab reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('bouncelab')">
+          <div class="card-row">
+            <span class="card-year">GAME LAB // PUBLIC</span>
+            <span class="badge e">TRY IT!</span>
+          </div>
+          <div class="lab-head"><img src="assets/logos/Bounce Lab/lab.png" alt=""><div class="lab-wordmark">Bounce Lab</div></div>
+          <div class="card-desc">A neon arcade of one-finger ball games. Jump straight into one below, or open the lab to see how they all evolved.</div>
+          <div class="lab-label" id="lab-count">GAMES INSIDE</div>
+          <div class="lab-shelf" id="lab-shelf"></div>
+          <span class="card-cta" style="color:#ff6fc8">OPEN PROJECT<span class="cta-arrow" aria-hidden="true">→</span></span>
         </div>
 
         <div class="card reveal reveal-delay-1" role="button" tabindex="0" onclick="openModal('speeder')">
@@ -1657,6 +1780,25 @@ const DATA = {
     link:  'https://az-build.github.io/Save-the-Dodo/',
     cta:   'PLAY NOW',
   },
+  bouncelab: {
+    title: 'BOUNCE LAB',
+    wordmark: true,
+    screenshots: ['assets/images/Bounce Lab 1.jpg','assets/images/Bounce Lab 2.jpg','assets/images/Bounce Lab 3.jpg','assets/images/Bounce Lab 4.jpg','assets/images/Bounce Lab 5.jpg'],
+    meta:  'GAME LAB // PUBLIC',
+    badge: '<span class="badge e">TRY IT!</span>',
+    body:  "Bounce Lab started with one question: how good can a bouncing ball feel on a phone? I kept trying new ideas, and instead of throwing the old ones away, I gave them a home. The lab is a little neon test chamber where every game is a glowing ball hopping along a track. Tap a ball to open its card, then hit play.\n\nEvery game uses one finger, and each one goes in a different direction. Bouncer is a side-scroller where you keep an orb alive between two platforms. Smashball is a 1v1 arena where you smash a heavy ball past a bot. Ascent is a vertical climber, and Summit has you punching Sisyphus's boulder up a chain of Greek mountains.\n\nI built it like a product test lab. Every version of every game stays playable, so you can see how each idea evolved. Players share one name across all the games, scores post to shared leaderboards, and anyone can rate a game or suggest a change. That feedback decides what I build next.",
+    tags:  ['GAMES','PHYSICS','HTML5 CANVAS','THREE.JS','LEADERBOARD','AI-ASSISTED'],
+    link:  'https://az-build.github.io/bounce-lab/',
+    cta:   'ENTER THE LAB',
+    /* The games in the lab. To add one, copy a line and change it.
+       id = the game's folder name in the bounce-lab repo (games/<id>/). */
+    games: [
+      { id: 'summit',    title: 'Summit',    v: 'v9', color: '#ff5226', tagline: 'Punch one boulder to the summit',        controls: 'Hold to wind up, slide to steer, let go to punch' },
+      { id: 'ascent',    title: 'Ascent',    v: 'v6', color: '#ff4fd8', tagline: 'Vertical neon climber',                  controls: 'Drag anywhere to move the pad' },
+      { id: 'smashball', title: 'Smashball', v: 'v4', color: '#ff9a3c', tagline: '1v1 arena striker',                      controls: 'Drag to run, tap to jump and smash' },
+      { id: 'bouncer',   title: 'Bouncer',   v: 'v6', color: '#5ef2ff', tagline: 'Side-scroller between two platforms',    controls: 'Drag up and down to move the platforms' },
+    ],
+  },
   speeder: {
     title: 'SPEEDER',
     logo:  'assets/logos/Speeder transparent.png',
@@ -1807,7 +1949,9 @@ function openModal(id) {
   const d = DATA[id];
   if (!d) return;
   document.getElementById('m-meta').innerHTML  = `<span>${d.meta}</span>${d.badge}`;
-  if (d.logo) {
+  if (d.wordmark) {
+    document.getElementById('m-title').innerHTML = `<div class="lab-head"><img src="assets/logos/Bounce Lab/lab.png" alt=""><div class="lab-wordmark">Bounce Lab</div></div>`;
+  } else if (d.logo) {
     const logoCls = d.logoBanner ? 'modal-logo modal-logo-banner' : 'modal-logo';
     document.getElementById('m-title').innerHTML = `<img src="${d.logo}" alt="${d.title}" class="${logoCls}">`;
   } else {
@@ -1828,14 +1972,17 @@ function openModal(id) {
     .map(p => `<p style="margin-bottom:14px">${p}</p>`)
     .join('');
   const shotsEl = document.getElementById('m-shots');
+  const gamesHtml = d.games
+    ? `<div class="modal-shots-label">${d.games.length} games in the lab</div><div class="lab-grid">${d.games.map(labTile).join('')}</div>`
+    : '';
   if (d.screenshots && d.screenshots.length) {
-    shotsEl.innerHTML = `<div class="modal-shots-label">Screenshots</div><div class="modal-shots">${
+    shotsEl.innerHTML = gamesHtml + `<div class="modal-shots-label">Screenshots</div><div class="modal-shots">${
       d.screenshots.map((src, i) =>
         `<img src="${src}" class="modal-shot" alt="Screenshot ${i+1}" onclick="openLightbox(${JSON.stringify(d.screenshots)},${i})">`
       ).join('')
     }</div>`;
   } else {
-    shotsEl.innerHTML = '';
+    shotsEl.innerHTML = gamesHtml;
   }
   document.getElementById('m-tags').innerHTML    = d.tags.map(t =>
     `<span class="modal-tag">${t}</span>`).join('');
@@ -1848,6 +1995,28 @@ function openModal(id) {
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
+
+/* ── BOUNCE LAB GAME SHELF ───────────────────────────────── */
+const LAB_URL = 'https://az-build.github.io/bounce-lab/games/';
+function labRow(g) {
+  return `<a class="lab-game" style="--g:${g.color}" href="${LAB_URL}${g.id}/" target="_blank" rel="noopener" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()">
+    <img class="lab-icon" src="assets/logos/Bounce Lab/${g.id}.png" alt="" loading="lazy">
+    <span class="lab-txt"><b>${g.title}</b><small>${g.tagline}</small></span>
+    <span class="lab-ver">${g.v}</span>
+    <span class="lab-play">PLAY ▶</span></a>`;
+}
+function labTile(g) {
+  return `<a class="lab-game" style="--g:${g.color}" href="${LAB_URL}${g.id}/" target="_blank" rel="noopener">
+    <img class="lab-icon" src="assets/logos/Bounce Lab/${g.id}.png" alt="" loading="lazy">
+    <span class="lab-txt"><b>${g.title}</b><small>${g.tagline}</small>
+      <span class="lab-ctl">${g.controls}</span>
+      <span class="lab-foot"><span class="lab-ver">${g.v}</span><span class="lab-play">PLAY ▶</span></span></span></a>`;
+}
+(function renderLabShelf() {
+  const games = DATA.bouncelab.games;
+  document.getElementById('lab-shelf').innerHTML = games.map(labRow).join('');
+  document.getElementById('lab-count').textContent = `${games.length} GAMES INSIDE`;
+})();
 
 function closeModal() {
   document.getElementById('overlay').classList.remove('open');
